@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">AndroidCourseProject</string>
+    <string name="title_clients">Clients</string>
+    <string name="title_livings_and_bookings">Livings and Bookings</string>
+    <string name="title_apartments">Apartments</string>
+
+    <string name="clients_goToLivings_buttonTitle">Move to livings</string>
+    <string name="clients_goToBookings_buttonTitle">Move to bookings</string>
+    <string name="clients_editClient_buttonTitle">Change chosen client\'s data</string>
+    <string name="clients_deleteClient_buttonTitle">Delete chosen client\'s data</string>
+    <string name="clients_registerNewClient_buttonTitle">Clients</string>
+
+    <string name="bookings_goToClient_buttonTitle">Move to client</string>
+    <string name="bookings_editEntry_buttonTitle">Change chosen booking</string>
+    <string name="bookings_deleteEntry_buttonTitle">Delete chosen booking</string>
+
+    <string name="livings_goToClient_buttonTitle">Move to client</string>
+    <string name="livings_editEntry_buttonTitle">Change chosen living</string>
+    <string name="livings_deleteEntry_buttonTitle">Delete chosen living</string>
+    <string name="livings_showAdditionalServices_buttonTitle">Show additional services info</string>
+
+    <string name="apartments_editApartment_buttonTitle">Change chosen apartment info</string>
+    <string name="apartments_deleteApartment_buttonTitle">Delete chosen apartment</string>
+    <string name="apartments_addNewApartment_buttonTitle">Add new apartment</string>
+</resources>

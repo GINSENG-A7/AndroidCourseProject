@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.livings_and_bookings.LivingsAndBookingsFragment">
+
+
+    <ListView
+        android:id="@+id/clientsList"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/goToLivingsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </ListView>
+
+    <Button
+        android:id="@+id/goToLivingsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="1dp"
+        android:onClick="onGoToLivings"
+        android:text="@string/clients_goToLivings_buttonTitle"
+        app:layout_constraintBottom_toTopOf="@id/editClientButton"
+        app:layout_constraintEnd_toStartOf="@id/goToBookingsButton"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <Button
+        android:id="@+id/goToBookingsButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:onClick="onGoToBookings"
+        android:text="@string/clients_goToBookings_buttonTitle"
+        app:layout_constraintBottom_toTopOf="@id/editClientButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/goToLivingsButton" />
+
+    <Button
+        android:id="@+id/editClientButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onEditClient"
+        android:text="@string/clients_editClient_buttonTitle"
+        app:layout_constraintBottom_toTopOf="@id/deleteClientButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deleteClientButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onDeleteClient"
+        android:text="@string/clients_deleteClient_buttonTitle"
+        app:layout_constraintBottom_toTopOf="@id/registerNewClientButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/registerNewClientButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:onClick="onRegisterNewClient"
+        android:text="@string/clients_registerNewClient_buttonTitle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

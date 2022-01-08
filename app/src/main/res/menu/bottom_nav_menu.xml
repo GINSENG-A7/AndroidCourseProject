@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_clients"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="@string/title_clients" />
+
+    <item
+        android:id="@+id/navigation_livings_and_bookings"
+        android:icon="?android:attr/actionModeFindDrawable"
+        android:title="@string/title_livings_and_bookings" />
+
+    <item
+        android:id="@+id/navigation_apartments"
+        android:icon="@android:drawable/ic_dialog_dialer"
+        android:title="@string/title_apartments" />
+
+</menu>

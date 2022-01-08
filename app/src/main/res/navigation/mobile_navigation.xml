@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_clients">
+
+    <fragment
+        android:id="@+id/navigation_clients"
+        android:name="com.example.androidcourseproject.ui.clients.ClientsFragment"
+        android:label="@string/title_clients"
+        tools:layout="@layout/fragment_clients" />
+
+    <fragment
+        android:id="@+id/navigation_livings_and_bookings"
+        android:name="com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookingsFragment"
+        android:label="@string/title_livings_and_bookings"
+        tools:layout="@layout/fragment_livings_and_bookings" />
+
+    <fragment
+        android:id="@+id/navigation_apartments"
+        android:name="com.example.androidcourseproject.ui.apartments.ApartmentsFragment"
+        android:label="@string/title_apartments"
+        tools:layout="@layout/fragment_apartments" />
+</navigation>
