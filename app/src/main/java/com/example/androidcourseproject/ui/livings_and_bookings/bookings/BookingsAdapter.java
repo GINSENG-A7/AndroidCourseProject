@@ -1,4 +1,4 @@
-package com.example.androidcourseproject.ui.apartments;
+package com.example.androidcourseproject.ui.livings_and_bookings.bookings;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -9,50 +9,63 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidcourseproject.databinding.CustomApartmentsListItemLayoutBinding;
+import com.example.androidcourseproject.databinding.CustomLivingsAndBookingsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ApartmentRoom;
+import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 
 import java.util.List;
 
-public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.ViewHolder> {
+public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
+    public static List<BookingRoom> bookings;
+    public static List<ClientRoom> clients;
     public static List<ApartmentRoom> apartments;
     public static int checkedPosition = -1;
     public static int preCheckedPosition = -2;
 
-    public ApartmentsAdapter(List<ApartmentRoom> apartments) {
-        this.apartments = apartments;
+
+    public BookingsAdapter(List<BookingRoom> bookings) {
+        this.bookings = bookings;
     }
 
     @NonNull
     @Override
-    public ApartmentsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public BookingsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CustomApartmentsListItemLayoutBinding binding = CustomApartmentsListItemLayoutBinding.inflate(inflater, parent, false);
-        return new ViewHolder(binding);
+        CustomLivingsAndBookingsListItemLayoutBinding binding = CustomLivingsAndBookingsListItemLayoutBinding.inflate(inflater, parent, false);
+        return new BookingsAdapter.ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ApartmentsAdapter.ViewHolder holder, int position) {
-        holder.bind(apartments.get(position));
+    public void onBindViewHolder(@NonNull BookingsAdapter.ViewHolder holder, int position) {
+        holder.bind(bookings.get(position));
+//        holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
     public int getItemCount() {
-        return apartments.size();
+        return bookings.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        private final CustomApartmentsListItemLayoutBinding binding;
-        public ViewHolder(CustomApartmentsListItemLayoutBinding binding) {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final CustomLivingsAndBookingsListItemLayoutBinding binding;
+
+        public ViewHolder(CustomLivingsAndBookingsListItemLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
+        public void bind(BookingRoom booking) {
+            ClientRoom client = BookingsFragment.db.dao().getClientById(booking.client_id).get(0);
+            ApartmentRoom apartment = BookingsFragment.db.dao().getApartmentById(booking.apartment_id).get(0);;
 
-        public void bind(ApartmentRoom apartment) {
+            binding.tvName.setText(client.name);
+            binding.tvSurname.setText(client.surname);
+            binding.tvPatronymic.setText(client.patronymic);
+            binding.tvSettling.setText(booking.settling);
+            binding.tvEviction.setText(booking.eviction);
             binding.tvNumber.setText(String.valueOf(apartment.number));
-            binding.tvType.setText(apartment.type);
-            binding.tvPrice.setText(String.valueOf(apartment.price));
+            binding.tvValueOfGuests.setText(String.valueOf(booking.value_of_guests));
+            binding.tvValueOfKids.setText(String.valueOf(booking.value_of_kids));
 
             if(checkedPosition == -1) {
                 binding.getRoot().setBackgroundColor(Color.WHITE);
@@ -85,9 +98,9 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
         }
     }
 
-    public ApartmentRoom getSelected() {
+    public BookingRoom getSelected() {
         if (checkedPosition != -1) {
-            return apartments.get(checkedPosition);
+            return bookings.get(checkedPosition);
         }
         return null;
     }

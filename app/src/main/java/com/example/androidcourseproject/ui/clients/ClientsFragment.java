@@ -116,14 +116,5 @@ public class ClientsFragment extends Fragment {
         if (listOfClientsRooms.size() <= 0) {
             throw new RuntimeException("Выводимые таблицы пусты");
         }
-        // находим список
-//        ListView lvClients = (ListView)binding.clientsList;
-
-        // создаем адаптер
-//        ListAdapter<String> adapter = new ListAdapter<String>(getContext(),
-//                R.layout.custom_list_item_layout, listOfClientsRooms.get(1).client_id);
-
-        // присваиваем адаптер списку
-//        lvClients.setAdapter(adapter);
     }
 }

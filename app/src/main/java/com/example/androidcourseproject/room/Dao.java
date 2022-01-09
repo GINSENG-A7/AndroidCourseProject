@@ -8,8 +8,11 @@ import java.util.List;
 
 @androidx.room.Dao
 public interface Dao {
-    @Query("SELECT * FROM living l WHERE l.client_id = :clientId")
-    List<LivingRoom> getLivings(int clientId);
+    @Query("SELECT * FROM client c WHERE c.client_id = :clientId")
+    List<ClientRoom> getClientById(int clientId);
+
+    @Query("SELECT * FROM apartment a WHERE a.apartment_id = :apartmentId")
+    List<ApartmentRoom> getApartmentById(int apartmentId);
 
     @Query("SELECT * FROM client")
     List<ClientRoom> getAllClients();
