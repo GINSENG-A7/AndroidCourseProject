@@ -16,7 +16,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidcourseproject.R;
-import com.example.androidcourseproject.databinding.CustomListItemLayoutBinding;
+import com.example.androidcourseproject.databinding.CustomClientsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ClientRoom;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        CustomListItemLayoutBinding binding = CustomListItemLayoutBinding.inflate(inflater, parent, false);
+        CustomClientsListItemLayoutBinding binding = CustomClientsListItemLayoutBinding.inflate(inflater, parent, false);
         return new ViewHolder(binding);
     }
 
@@ -51,9 +51,9 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final CustomListItemLayoutBinding binding;
+        private final CustomClientsListItemLayoutBinding binding;
 
-        public ViewHolder(CustomListItemLayoutBinding binding) {
+        public ViewHolder(CustomClientsListItemLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

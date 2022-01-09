@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_apartments_list_item_layout.xml" value="0.33" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_clientsList_item_layout.xml" value="0.34375" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_list_layout.xml" value="0.12001811594202899" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/edit_client_layout.xml" value="0.17831813576494426" />

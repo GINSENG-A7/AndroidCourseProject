@@ -14,6 +14,15 @@ public interface Dao {
     @Query("SELECT * FROM client")
     List<ClientRoom> getAllClients();
 
+    @Query("SELECT * FROM living")
+    List<LivingRoom> getAllLivings();
+
+    @Query("SELECT * FROM booking")
+    List<BookingRoom> getAllBookings();
+
+    @Query("SELECT * FROM apartment")
+    List<ApartmentRoom> getAllApartments();
+
     @Query("SELECT * FROM client WHERE surname LIKE :surname ")
     ClientRoom getClientsBySurname(String surname);
 
