@@ -77,40 +77,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void onGoToLivings(View view) {
-    }
-
-    public void onGoToBookings(View view) {
-    }
-
-    public void onEditClient(View view) {
-        // create an alert builder
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Name");
-
-        // set the custom layout
-        final View customLayout = getLayoutInflater().inflate(R.layout.edit_client_layout, null);
-        builder.setView(customLayout);
-
-        // add a button
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // send data from the AlertDialog to the Activity
-                EditText editText = customLayout.findViewById(R.id.editText);
-                sendDialogDataToActivity(editText.getText().toString());
-            }
-        });
-
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void sendDialogDataToActivity(String data) {
-        Toast.makeText(this, data, Toast.LENGTH_SHORT).show();
-    }
-
     public void onDeleteClient(View view) {
     }
 

@@ -1,22 +1,29 @@
 package com.example.androidcourseproject.ui.clients;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.FragmentClientsBinding;
+import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.ui.MainActivity;
 
@@ -26,7 +33,8 @@ public class ClientsFragment extends Fragment {
 
     private ClientsViewModel clientsViewModel;
     private FragmentClientsBinding binding;
-
+    private ClientsAdapter adapter;
+    public static AppDatabase db;
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         clientsViewModel =
@@ -34,7 +42,6 @@ public class ClientsFragment extends Fragment {
 
         binding = FragmentClientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
 //        final TextView textView = binding.textHome;
         clientsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
@@ -42,8 +49,55 @@ public class ClientsFragment extends Fragment {
 //                textView.setText(s);
             }
         });
+        db = AppDatabase.getDataBase(getContext());
+        List<ClientRoom> list = db.dao().getAllClients();
+        adapter = new ClientsAdapter(list);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
+                LinearLayoutManager.VERTICAL, false);
+        binding.clientsList.setLayoutManager(layoutManager);
+        binding.clientsList.setAdapter(adapter);
+
+        binding.clientsList.addItemDecoration(new DividerItemDecoration(getContext(),
+                LinearLayoutManager.VERTICAL));
+
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        binding.editClientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // create an alert builder
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setTitle("Name");
+
+                // set the custom layout
+                final View customLayout = getLayoutInflater().inflate(R.layout.edit_client_layout,
+                        null);
+                builder.setView(customLayout);
+
+                // add a button
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // send data from the AlertDialog to the Activity
+                        EditText editText = customLayout.findViewById(R.id.editText);
+                        sendDialogDataToActivity(editText.getText().toString());
+                    }
+                });
+
+                // create and show the alert dialog
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        });
+    }
+
+    private void sendDialogDataToActivity(String data) {
+        Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -63,7 +117,7 @@ public class ClientsFragment extends Fragment {
             throw new RuntimeException("Выводимые таблицы пусты");
         }
         // находим список
-        ListView lvClients = (ListView)binding.clientsList;
+//        ListView lvClients = (ListView)binding.clientsList;
 
         // создаем адаптер
 //        ListAdapter<String> adapter = new ListAdapter<String>(getContext(),
