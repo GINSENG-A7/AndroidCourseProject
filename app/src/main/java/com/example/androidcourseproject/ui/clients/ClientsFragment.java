@@ -34,6 +34,7 @@ public class ClientsFragment extends Fragment {
     private FragmentClientsBinding binding;
     private ClientsAdapter adapter;
     public static AppDatabase db;
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         clientsViewModel =
@@ -128,9 +129,9 @@ public class ClientsFragment extends Fragment {
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
                 MainActivity.navigateToLivings();
-//                LivingsFragment livingsFragment = new LivingsFragment();
-//                FragmentManager.findFragment(livingsFragment.getView());
-
+                Bundle result = new Bundle();
+                result.putString("tabNameKey", "Livings");
+                requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
             }
         });
 
@@ -138,6 +139,10 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
+                MainActivity.navigateToLivings();
+                Bundle result = new Bundle();
+                result.putString("tabNameKey", "Booking");
+                requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
             }
         });
 

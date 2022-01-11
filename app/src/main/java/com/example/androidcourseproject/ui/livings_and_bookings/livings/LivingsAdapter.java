@@ -13,10 +13,11 @@ import com.example.androidcourseproject.databinding.CustomLivingsAndBookingsList
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
+import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
-public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHolder> {
+public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHolder> implements Actionable {
     public static List<LivingRoom> livings;
     public static List<ClientRoom> clients;
     public static List<ApartmentRoom> apartments;
@@ -38,13 +39,21 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull LivingsAdapter.ViewHolder holder, int position) {
-        holder.bind(livings.get(position));
+        holder.bind(livings.get(position), this);
 //        holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
     public int getItemCount() {
         return livings.size();
+    }
+
+    @Override
+    public void updateItem(int position) {
+        if(checkedPosition != -1 && checkedPosition != position) {
+            notifyItemChanged(checkedPosition);
+        }
+        checkedPosition = position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +63,7 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(LivingRoom living) {
+        public void bind(LivingRoom living, Actionable actionable) {
             ClientRoom client = LivingsFragment.db.dao().getClientById(living.client_id).get(0);
             ApartmentRoom apartment = LivingsFragment.db.dao().getApartmentById(living.apartment_id).get(0);;
 
@@ -82,7 +91,7 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    actionable.updateItem(getAdapterPosition());
 
                     binding.getRoot().setBackgroundColor(Color.YELLOW);
                     if (checkedPosition != getAdapterPosition()) {

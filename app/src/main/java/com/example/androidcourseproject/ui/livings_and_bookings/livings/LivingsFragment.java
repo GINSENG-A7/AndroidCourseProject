@@ -4,10 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,6 +30,7 @@ public class LivingsFragment extends Fragment {
     private FragmentLivingsBinding binding;
     private LivingsAdapter adapter;
     public static AppDatabase db;
+    private ClientsViewModel clientsViewModel;
 
     @Nullable
     @Override
@@ -48,4 +51,6 @@ public class LivingsFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 }

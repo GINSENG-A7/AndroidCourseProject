@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidcourseproject.databinding.CustomApartmentsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
-public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.ViewHolder> {
+public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.ViewHolder> implements Actionable {
     public static List<ApartmentRoom> apartments;
     public static int checkedPosition = -1;
     public static int preCheckedPosition = -2;
@@ -34,12 +35,20 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ApartmentsAdapter.ViewHolder holder, int position) {
-        holder.bind(apartments.get(position));
+        holder.bind(apartments.get(position), this);
     }
 
     @Override
     public int getItemCount() {
         return apartments.size();
+    }
+
+    @Override
+    public void updateItem(int position) {
+        if(checkedPosition != -1 && checkedPosition != position) {
+            notifyItemChanged(checkedPosition);
+        }
+        checkedPosition = position;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -49,7 +58,7 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
             this.binding = binding;
         }
 
-        public void bind(ApartmentRoom apartment) {
+        public void bind(ApartmentRoom apartment, Actionable actionable) {
             binding.tvNumber.setText(String.valueOf(apartment.number));
             binding.tvType.setText(apartment.type);
             binding.tvPrice.setText(String.valueOf(apartment.price));
@@ -69,7 +78,7 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    actionable.updateItem(getAdapterPosition());
 
                     binding.getRoot().setBackgroundColor(Color.YELLOW);
                     if (checkedPosition != getAdapterPosition()) {

@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/adding_new_client_apartment_picker.xml" value="0.25833333333333336" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/adding_new_client_data_inputs.xml" value="0.25" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_apartments_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_bookings_list_item_layout.xml" value="0.25625" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_clientsList_item_layout.xml" value="0.34375" />
@@ -17,8 +19,10 @@
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_bookings.xml" value="0.338768115942029" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_clients.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_item_list.xml" value="0.25833333333333336" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_livings.xml" value="0.338768115942029" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_livings_and_bookings.xml" value="0.33" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_register_client_data_inputs.xml" value="0.31929347826086957" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/1/AndroidStudioProjects/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/1/AndroidStudioProjects/AndroidCourseProject/app/src/main/res/layout/fragment_apartments.xml" value="0.33" />

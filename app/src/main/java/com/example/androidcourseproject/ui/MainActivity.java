@@ -21,12 +21,14 @@ import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.clients.ClientsFragment;
+import com.example.androidcourseproject.ui.clients.ClientsViewModel;
 import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookingsFragment;
 import com.example.androidcourseproject.ui.livings_and_bookings.PagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -46,6 +48,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static AppDatabase db;
     static NavController navController;
     static PagerAdapter pagerAdapter;
+    private static ClientsViewModel clientsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,8 +77,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        db.dao().insertApartment(new ApartmentRoom(1, "aboba", 123));
 //        db.dao().insertAdditionalService(new AdditionalServicesRoom(1, 1, 1, 1, 1));
 //        db.dao().insertLiving(new LivingRoom(1, "zxc", "zxc", 1, 1, 1, 1));
-        ClientRoom client = db.dao().getClientsBySurname("ebooka");
+//        ClientRoom client = db.dao().getClientsBySurname("ebooka");
 //        Log.d("zxc", String.valueOf(client.client_id));
+        clientsViewModel = new ViewModelProvider(this).get(ClientsViewModel.class);
     }
 
     @Override
@@ -86,5 +90,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public static void navigateToLivings(){
         navController.navigate(R.id.navigation_livings_and_bookings);
 //        new LivingsAndBookingsFragment().slideToBookings();
+//        clientsViewModel.setData("Livings");
+    }
+
+    public static void navigateToBookings(){
+        navController.navigate(R.id.navigation_livings_and_bookings);
+//        new LivingsAndBookingsFragment().slideToBookings();
+//        clientsViewModel.setData("Bookings");
     }
 }

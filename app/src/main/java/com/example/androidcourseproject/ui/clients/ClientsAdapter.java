@@ -18,10 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.CustomClientsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
-public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHolder> {
+public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHolder> implements Actionable {
     public static List<ClientRoom> clients;
     public static int checkedPosition = -1;
     public static int preCheckedPosition = -2;
@@ -41,13 +42,21 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.bind(clients.get(position));
+        holder.bind(clients.get(position), this);
 //        holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
     public int getItemCount() {
         return clients.size();
+    }
+
+    @Override
+    public void updateItem(int position) {
+        if(checkedPosition != -1 && checkedPosition != position) {
+            notifyItemChanged(checkedPosition);
+        }
+        checkedPosition = position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -57,7 +66,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(ClientRoom client) {
+        public void bind(ClientRoom client, Actionable actionable) {
             setDecorationSymbols();
 
             binding.tvName.setText(client.name);
@@ -83,7 +92,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    actionable.updateItem(getAdapterPosition());
 
                     binding.getRoot().setBackgroundColor(Color.YELLOW);
                     if (checkedPosition != getAdapterPosition()) {
@@ -116,3 +125,4 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         return null;
     }
 }
+

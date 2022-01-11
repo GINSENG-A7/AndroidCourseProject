@@ -5,10 +5,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
@@ -51,13 +53,32 @@ public class LivingsAndBookingsFragment extends Fragment {
         binding = null;
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        requireActivity().getSupportFragmentManager()
+                .setFragmentResultListener("requestKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                        String result = bundle.getString("tabNameKey");
+                        if (result.equals("Livings")) {
+                            slideToLivings();
+                            Toast.makeText(getContext(), "Livings", Toast.LENGTH_LONG).show();
+                        } else {
+                            slideToBookings();
+                            Toast.makeText(getContext(), "Bookings", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+    }
+
     public void slideToBookings(){
         viewpager2 = binding.livingBookingContainer;
-        viewpager2.setCurrentItem(2);
+        viewpager2.setCurrentItem(1);
     }
 
     public void slideToLivings(){
         viewpager2 = binding.livingBookingContainer;
-        viewpager2.setCurrentItem(1);
+        viewpager2.setCurrentItem(0);
     }
 }

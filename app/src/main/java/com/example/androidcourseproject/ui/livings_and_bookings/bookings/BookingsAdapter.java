@@ -13,10 +13,11 @@ import com.example.androidcourseproject.databinding.CustomLivingsAndBookingsList
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
-public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
+public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> implements Actionable {
     public static List<BookingRoom> bookings;
     public static List<ClientRoom> clients;
     public static List<ApartmentRoom> apartments;
@@ -38,13 +39,21 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull BookingsAdapter.ViewHolder holder, int position) {
-        holder.bind(bookings.get(position));
+        holder.bind(bookings.get(position), this);
 //        holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
     public int getItemCount() {
         return bookings.size();
+    }
+
+    @Override
+    public void updateItem(int position) {
+        if(checkedPosition != -1 && checkedPosition != position) {
+            notifyItemChanged(checkedPosition);
+        }
+        checkedPosition = position;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,7 +63,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(BookingRoom booking) {
+        public void bind(BookingRoom booking, Actionable actionable) {
             ClientRoom client = BookingsFragment.db.dao().getClientById(booking.client_id).get(0);
             ApartmentRoom apartment = BookingsFragment.db.dao().getApartmentById(booking.apartment_id).get(0);;
 
@@ -82,7 +91,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             binding.getRoot().setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    actionable.updateItem(getAdapterPosition());
 
                     binding.getRoot().setBackgroundColor(Color.YELLOW);
                     if (checkedPosition != getAdapterPosition()) {
