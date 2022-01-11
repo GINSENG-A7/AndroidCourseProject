@@ -14,7 +14,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Имя: " />
+            android:text="@string/client_name" />
 
         <TextView
             android:id="@+id/tvName"
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Фамилия: " />
+            android:text="@string/client_surname" />
 
         <TextView
             android:id="@+id/tvSurname"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Отчество: " />
+            android:text="@string/client_patronymic" />
 
         <TextView
             android:id="@+id/tvPatronymicLabel"
@@ -70,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Серия паспорта:" />
+            android:text="@string/client_passport_series" />
 
         <TextView
             android:id="@+id/tvPassportSeries"
@@ -90,7 +90,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Номер паспорта: " />
+            android:text="@string/client_passport_number" />
 
         <TextView
             android:id="@+id/tvPassportNumber"
@@ -109,7 +109,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Дата рождения: " />
+            android:text="@string/client_birthday" />
 
         <TextView
             android:id="@+id/tvBirthday"
@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:text="Телефон: " />
+            android:text="@string/client_telephone" />
 
         <TextView
             android:id="@+id/tvTelephone"

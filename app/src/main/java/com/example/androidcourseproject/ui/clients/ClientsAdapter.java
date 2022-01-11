@@ -58,6 +58,8 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             this.binding = binding;
         }
         public void bind(ClientRoom client) {
+            setDecorationSymbols();
+
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);
             binding.tvBirthday.setText(client.birthday);
@@ -95,6 +97,16 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
             });
         }
+
+        private void setDecorationSymbols() {
+            binding.passportSeriesLabel.setText(binding.passportSeriesLabel.getText().toString() + ": ");
+            binding.passportNumberLabel.setText(binding.passportNumberLabel.getText().toString() + ": ");
+            binding.nameLabel.setText(binding.nameLabel.getText().toString() + ": ");
+            binding.surnameLabel.setText(binding.surnameLabel.getText().toString() + ": ");
+            binding.patronymicLabel.setText(binding.patronymicLabel.getText().toString() + ": ");
+            binding.birthdayLabel.setText(binding.birthdayLabel.getText().toString() + ": ");
+            binding.telephoneLabel.setText(binding.telephoneLabel.getText().toString() + ": ");
+        }
     }
 
     public ClientRoom getSelected() {
@@ -103,5 +115,4 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         }
         return null;
     }
-
 }

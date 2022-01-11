@@ -29,6 +29,12 @@ public interface Dao {
     @Query("SELECT * FROM client WHERE surname LIKE :surname ")
     ClientRoom getClientsBySurname(String surname);
 
+    @Query("SELECT * FROM living WHERE client_id = :clientId")
+    List<LivingRoom> getAllLivingsByClientId(int clientId);
+
+    @Query("SELECT * FROM booking WHERE client_id LIKE :clientId ")
+    List<BookingRoom> getAllBookingsByClientId(int clientId);
+
     @Insert()
     void insertClient(ClientRoom client);
 

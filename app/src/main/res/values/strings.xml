@@ -8,7 +8,7 @@
     <string name="clients_goToBookings_buttonTitle">Move to bookings</string>
     <string name="clients_editClient_buttonTitle">Change chosen client\'s data</string>
     <string name="clients_deleteClient_buttonTitle">Delete chosen client\'s data</string>
-    <string name="clients_registerNewClient_buttonTitle">Clients</string>
+    <string name="clients_registerNewClient_buttonTitle">Register new client</string>
 
     <string name="bookings_goToClient_buttonTitle">Move to client</string>
     <string name="bookings_editEntry_buttonTitle">Change chosen booking</string>
@@ -22,4 +22,12 @@
     <string name="apartments_editApartment_buttonTitle">Change chosen apartment info</string>
     <string name="apartments_deleteApartment_buttonTitle">Delete chosen apartment</string>
     <string name="apartments_addNewApartment_buttonTitle">Add new apartment</string>
+
+    <string name="client_passport_series">Passport series</string>
+    <string name="client_passport_number">Passport number</string>
+    <string name="client_name">Name</string>
+    <string name="client_surname">Surname</string>
+    <string name="client_patronymic">Patronymic</string>
+    <string name="client_birthday">Birthday</string>
+    <string name="client_telephone">Telephone</string>
 </resources>

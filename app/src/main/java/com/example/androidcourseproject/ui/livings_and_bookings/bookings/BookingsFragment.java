@@ -16,6 +16,7 @@ import com.example.androidcourseproject.databinding.FragmentBookingsBinding;
 import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.LivingRoom;
+import com.example.androidcourseproject.ui.clients.ClientsViewModel;
 import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookingsViewModel;
 import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsAdapter;
 
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookingsFragment extends Fragment {
+    private ClientsViewModel clientsViewModel;
     private LivingsAndBookingsViewModel livingsAndBookingsViewModel;
     private FragmentBookingsBinding binding;
     private BookingsAdapter adapter;

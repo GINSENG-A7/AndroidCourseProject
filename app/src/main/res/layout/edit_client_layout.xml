@@ -7,8 +7,45 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/tvEditPassportSeries"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:hint="@string/client_passport_series" />
+
+    <EditText
+        android:id="@+id/tvEditPassportNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_passport_number" />
+
+    <EditText
+        android:id="@+id/tvEditName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_name" />
+
+    <EditText
+        android:id="@+id/tvEditSurname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_surname" />
+
+    <EditText
+        android:id="@+id/tvEditPatronymic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_patronymic" />
+
+    <EditText
+        android:id="@+id/tvEditBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_birthday" />
+
+    <EditText
+        android:id="@+id/tvEditTelephone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/client_telephone" />
 
 </LinearLayout>

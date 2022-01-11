@@ -13,6 +13,7 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 import com.example.androidcourseproject.R;
+import com.example.androidcourseproject.databinding.FragmentLivingsBinding;
 import com.example.androidcourseproject.kal.DbHelper;
 import com.example.androidcourseproject.room.AdditionalServicesRoom;
 import com.example.androidcourseproject.room.ApartmentRoom;
@@ -20,6 +21,8 @@ import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.clients.ClientsFragment;
+import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookingsFragment;
+import com.example.androidcourseproject.ui.livings_and_bookings.PagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,6 +31,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.androidcourseproject.databinding.ActivityMainBinding;
 
@@ -40,6 +44,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     DbHelper dbHelper;
     SimpleCursorAdapter simpleCursorAdapter;
     public static AppDatabase db;
+    static NavController navController;
+    static PagerAdapter pagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_clients, R.id.navigation_livings_and_bookings, R.id.navigation_apartments)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
@@ -77,9 +83,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void onDeleteClient(View view) {
-    }
-
-    public void onRegisterNewClient(View view) {
+    public static void navigateToLivings(){
+        navController.navigate(R.id.navigation_livings_and_bookings);
+//        new LivingsAndBookingsFragment().slideToBookings();
     }
 }
