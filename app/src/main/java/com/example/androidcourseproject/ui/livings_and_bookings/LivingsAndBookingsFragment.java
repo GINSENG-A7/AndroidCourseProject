@@ -63,6 +63,10 @@ public class LivingsAndBookingsFragment extends Fragment {
                         String result = bundle.getString("tabNameKey");
                         if (result.equals("Livings")) {
                             slideToLivings();
+                            int clientId = bundle.getInt("clientId");
+                            bundle.putInt("clientId", clientId);
+                            requireActivity().getSupportFragmentManager().
+                                    setFragmentResult("relocatedDataKey", bundle);
                             Toast.makeText(getContext(), "Livings", Toast.LENGTH_LONG).show();
                         } else {
                             slideToBookings();

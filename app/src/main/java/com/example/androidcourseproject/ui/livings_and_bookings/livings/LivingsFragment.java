@@ -52,5 +52,21 @@ public class LivingsFragment extends Fragment {
         return binding.getRoot();
     }
 
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        requireActivity().getSupportFragmentManager()
+                .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                        String result = bundle.getString("tabNameKey");
+                        if (result.equals("Livings")) {
+                            int clientId = bundle.getInt("clientId");
+                            List<LivingRoom> list = db.dao().getAllLivingsByClientId(clientId);
+                            adapter = new LivingsAdapter(list);
+                            binding.livingsList.setAdapter(adapter);
+                        }
+                    }
+                });
+    }
 }

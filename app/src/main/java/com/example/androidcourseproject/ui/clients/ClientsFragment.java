@@ -131,6 +131,7 @@ public class ClientsFragment extends Fragment {
                 MainActivity.navigateToLivings();
                 Bundle result = new Bundle();
                 result.putString("tabNameKey", "Livings");
+                result.putInt("clientId", client.client_id);
                 requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
             }
         });
@@ -142,6 +143,7 @@ public class ClientsFragment extends Fragment {
                 MainActivity.navigateToLivings();
                 Bundle result = new Bundle();
                 result.putString("tabNameKey", "Booking");
+                result.putInt("clientId", client.client_id);
                 requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
             }
         });
