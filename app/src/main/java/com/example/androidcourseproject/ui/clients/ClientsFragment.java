@@ -12,9 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,7 +21,6 @@ import com.example.androidcourseproject.databinding.FragmentClientsBinding;
 import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.ui.MainActivity;
-import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsFragment;
 
 import java.util.List;
 
@@ -128,7 +124,7 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
-                MainActivity.navigateToLivings();
+                MainActivity.navigateToLivingsAndBookings();
                 Bundle result = new Bundle();
                 result.putString("tabNameKey", "Livings");
                 result.putInt("clientId", client.client_id);
@@ -140,7 +136,7 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
-                MainActivity.navigateToLivings();
+                MainActivity.navigateToLivingsAndBookings();
                 Bundle result = new Bundle();
                 result.putString("tabNameKey", "Booking");
                 result.putInt("clientId", client.client_id);
@@ -158,7 +154,7 @@ public class ClientsFragment extends Fragment {
         binding.registerNewClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                MainActivity.navigateToClientRegistration();
             }
         });
     }

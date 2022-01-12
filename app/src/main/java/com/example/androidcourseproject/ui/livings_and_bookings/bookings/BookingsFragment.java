@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -48,5 +49,23 @@ public class BookingsFragment extends Fragment {
                 LinearLayoutManager.VERTICAL));
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        requireActivity().getSupportFragmentManager()
+                .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                        String result = bundle.getString("tabNameKey");
+                        if (result.equals("Bookings")) {
+                            int clientId = bundle.getInt("clientId");
+                            List<BookingRoom> list = db.dao().getAllBookingsByClientId(clientId);
+                            adapter = new BookingsAdapter(list);
+                            binding.bookingsList.setAdapter(adapter);
+                        }
+                    }
+                });
     }
 }

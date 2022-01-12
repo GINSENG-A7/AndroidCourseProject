@@ -87,15 +87,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public static void navigateToLivings(){
+    public static void navigateToLivingsAndBookings() {
         navController.navigate(R.id.navigation_livings_and_bookings);
 //        new LivingsAndBookingsFragment().slideToBookings();
 //        clientsViewModel.setData("Livings");
     }
 
-    public static void navigateToBookings(){
-        navController.navigate(R.id.navigation_livings_and_bookings);
-//        new LivingsAndBookingsFragment().slideToBookings();
-//        clientsViewModel.setData("Bookings");
+    public static void navigateToClientRegistration() {
+        navController.navigate(R.id.registerClientDataInputs);
     }
 }

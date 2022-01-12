@@ -22,4 +22,14 @@
         android:name="com.example.androidcourseproject.ui.apartments.ApartmentsFragment"
         android:label="@string/title_apartments"
         tools:layout="@layout/fragment_apartments" />
+    <fragment
+        android:id="@+id/registerClientDataInputs"
+        android:name="com.example.androidcourseproject.ui.clients.RegisterClientDataInputs"
+        android:label="fragment_register_client_data_inputs"
+        tools:layout="@layout/fragment_register_client_data_inputs" />
+    <fragment
+        android:id="@+id/registerClientApartmentPicker"
+        android:name="com.example.androidcourseproject.ui.apartments.RegisterClientApartmentPicker"
+        android:label="fragment_register_client_apartment_picker"
+        tools:layout="@layout/fragment_register_client_apartment_picker" />
 </navigation>
