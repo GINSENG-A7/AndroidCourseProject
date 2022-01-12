@@ -71,7 +71,7 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
 
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);
-            binding.tvBirthday.setText(client.birthday);
+            binding.tvBirthday.setText(String.valueOf(client.birthday));
             binding.tvPassportNumber.setText(String.valueOf(client.passport_number));
             binding.tvPassportSeries.setText(String.valueOf(client.passport_series));
             binding.tvPatronymicLabel.setText(client.patronymic);

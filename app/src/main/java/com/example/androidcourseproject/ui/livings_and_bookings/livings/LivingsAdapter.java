@@ -70,8 +70,8 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);
             binding.tvPatronymic.setText(client.patronymic);
-            binding.tvSettling.setText(living.settling);
-            binding.tvEviction.setText(living.eviction);
+            binding.tvSettling.setText(String.valueOf(living.settling));
+            binding.tvEviction.setText(String.valueOf(living.eviction));
             binding.tvNumber.setText(String.valueOf(apartment.number));
             binding.tvValueOfGuests.setText(String.valueOf(living.value_of_guests));
             binding.tvValueOfKids.setText(String.valueOf(living.value_of_kids));

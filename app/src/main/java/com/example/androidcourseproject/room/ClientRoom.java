@@ -19,11 +19,11 @@ public class ClientRoom {
     @ColumnInfo(name = "patronymic")
     public String patronymic;
     @ColumnInfo(name = "birthday")
-    public String birthday;
+    public long birthday;
     @ColumnInfo(name = "telephone")
     public String telephone;
 
-    public ClientRoom(int passport_series, int passport_number, String name, String surname, String patronymic, String birthday, String telephone) {
+    public ClientRoom(int passport_series, int passport_number, String name, String surname, String patronymic, long birthday, String telephone) {
         this.passport_series = passport_series;
         this.passport_number = passport_number;
         this.name = name;

@@ -30,9 +30,9 @@ public class LivingRoom {
     @ColumnInfo(name = "client_id")
     public int client_id;
     @ColumnInfo(name = "settling")
-    public String settling;
+    public long settling;
     @ColumnInfo(name = "eviction")
-    public String eviction;
+    public long eviction;
     @ColumnInfo(name = "value_of_guests")
     public int value_of_guests;
     @ColumnInfo(name = "value_of_kids")
@@ -42,7 +42,7 @@ public class LivingRoom {
     @ColumnInfo(name = "as_id")
     public int as_id;
 
-    public LivingRoom(int client_id, String settling, String eviction, int value_of_guests, int value_of_kids, int apartment_id, int as_id) {
+    public LivingRoom(int client_id, long settling, long eviction, int value_of_guests, int value_of_kids, int apartment_id, int as_id) {
         this.client_id = client_id;
         this.settling = settling;
         this.eviction = eviction;

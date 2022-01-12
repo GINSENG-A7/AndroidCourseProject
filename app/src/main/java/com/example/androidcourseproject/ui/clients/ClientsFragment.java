@@ -154,7 +154,7 @@ public class ClientsFragment extends Fragment {
         binding.registerNewClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.navigateToClientRegistration();
+                MainActivity.navigateToClientRegistrationDataInputting();
             }
         });
     }
@@ -166,7 +166,10 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        setArrayAdapter(MainActivity.db.dao().getAllClients());
+        List<ClientRoom> clientList = MainActivity.db.dao().getAllClients();
+        if (clientList.size() > 0) {
+            setArrayAdapter(clientList);
+        }
     }
 
     @Override

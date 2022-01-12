@@ -70,8 +70,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);
             binding.tvPatronymic.setText(client.patronymic);
-            binding.tvSettling.setText(booking.settling);
-            binding.tvEviction.setText(booking.eviction);
+            binding.tvSettling.setText(String.valueOf(booking.settling));
+            binding.tvEviction.setText(String.valueOf(booking.eviction));
             binding.tvNumber.setText(String.valueOf(apartment.number));
             binding.tvValueOfGuests.setText(String.valueOf(booking.value_of_guests));
             binding.tvValueOfKids.setText(String.valueOf(booking.value_of_kids));

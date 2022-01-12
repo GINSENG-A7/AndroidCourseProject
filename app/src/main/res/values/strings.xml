@@ -32,4 +32,8 @@
     <string name="client_telephone">Telephone</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="newClient_birthdayPick_buttonTitle">Choose birthday date</string>
+    <string name="newClient_noDate_dateTextView">No date chosen</string>
+    <string name="newClient_next_buttonTitle">Next</string>
 </resources>

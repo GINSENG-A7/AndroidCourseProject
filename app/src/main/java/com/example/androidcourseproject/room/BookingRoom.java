@@ -25,9 +25,9 @@ public class BookingRoom {
     @ColumnInfo(name = "client_id")
     public int client_id;
     @ColumnInfo(name = "settling")
-    public String settling;
+    public long settling;
     @ColumnInfo(name = "eviction")
-    public String eviction;
+    public long eviction;
     @ColumnInfo(name = "booking_apartment_number")
     public int booking_apartment_number;
     @ColumnInfo(name = "value_of_guests")
@@ -36,4 +36,13 @@ public class BookingRoom {
     public int value_of_kids;
     @ColumnInfo(name = "apartment_id")
     public int apartment_id;
+
+    public BookingRoom(int client_id, long settling, long eviction, int value_of_guests, int value_of_kids, int apartment_id) {
+        this.client_id = client_id;
+        this.settling = settling;
+        this.eviction = eviction;
+        this.value_of_guests = value_of_guests;
+        this.value_of_kids = value_of_kids;
+        this.apartment_id = apartment_id;
+    }
 }
