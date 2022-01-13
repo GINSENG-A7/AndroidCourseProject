@@ -36,14 +36,14 @@ public interface Dao {
     List<BookingRoom> getAllBookingsByClientId(int clientId);
 
     @Insert()
-    void insertClient(ClientRoom client);
+    long insertClient(ClientRoom client);
 
     @Insert()
     void insertLiving(LivingRoom living);
 
     @Insert()
-    void insertApartment(ApartmentRoom apartment);
+    long insertAdditionalService(AdditionalServicesRoom service);
 
     @Insert()
-    void insertAdditionalService(AdditionalServicesRoom service);
+    void insertApartment(ApartmentRoom apartment);
 }

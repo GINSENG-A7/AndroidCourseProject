@@ -1,5 +1,6 @@
 package com.example.androidcourseproject.ui;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -97,5 +98,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static void navigateToClientRegistrationApartmentPicking() {
         navController.navigate(R.id.registerClientApartmentPicker);
+    }
+
+    public static void showLongToastWithText(Context context, String text) {
+        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
+    }
+
+    public static void navigateToClient() {
+        navController.navigate(R.id.navigation_clients);
     }
 }

@@ -30,10 +30,14 @@
     <string name="client_patronymic">Patronymic</string>
     <string name="client_birthday">Birthday</string>
     <string name="client_telephone">Telephone</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="living_valueOfGuests">Guests</string>
+    <string name="living_valueOfKids">Kids</string>
 
     <string name="newClient_birthdayPick_buttonTitle">Choose birthday date</string>
     <string name="newClient_noDate_dateTextView">No date chosen</string>
     <string name="newClient_next_buttonTitle">Next</string>
+    <string name="newClient_settlingPick_buttonTitle">Choose settling date</string>
+    <string name="newClient_evictionPick_buttonTitle">Choose eviction date</string>
+    <string name="newClient_finishLivingRegistration_buttonTitle">Register living</string>
+    <string name="newClient_finishBookingRegistration_buttonTitle">Register booking</string>
 </resources>

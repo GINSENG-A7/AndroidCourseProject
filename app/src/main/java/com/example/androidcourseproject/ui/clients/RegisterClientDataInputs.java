@@ -1,5 +1,6 @@
 package com.example.androidcourseproject.ui.clients;
 
+import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -22,6 +23,7 @@ import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.ui.MainActivity;
 
 import java.util.Date;
+import com.example.androidcourseproject.InputValidation;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,12 +34,13 @@ public class RegisterClientDataInputs extends Fragment {
     private FragmentRegisterClientDataInputsBinding binding;
     private long chosenBirthdayDate;
     protected CalendarView calendarView;
+    protected InputValidation inputValidation;
+    private int valueOfGuests = 0;
+    private int valueOfKids = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_register_client_data_inputs, container, false);
         binding = FragmentRegisterClientDataInputsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         return root;
@@ -46,6 +49,8 @@ public class RegisterClientDataInputs extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        inputValidation = new InputValidation();
+
         binding.chooseBirthdayButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +81,7 @@ public class RegisterClientDataInputs extends Fragment {
                 // clienteate and show the alert dialog
                 AlertDialog dialog = builder.create();
                 calendarView = customLayout.findViewById(R.id.calendarView);
+
                 dialog.show();
             }
         });
@@ -83,26 +89,63 @@ public class RegisterClientDataInputs extends Fragment {
         binding.nextStepButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.navigateToClientRegistrationApartmentPicking();
                 Bundle result = new Bundle();
-                ClientRoom newClient = new ClientRoom(
-                        Integer.valueOf(binding.etPassportSeries.getText().toString()),
-                        Integer.valueOf(binding.etPassportNumber.getText().toString()),
-                        binding.etName.getText().toString(),
-                        binding.etSurname.getText().toString(),
-                        binding.etPatronymic.getText().toString(),
-                        chosenBirthdayDate,
-                        binding.etTelephone.getText().toString()
+
+                if(binding.etPassportSeries.getText().toString().equals("") ||
+                        binding.etPassportNumber.getText().toString().equals("") ||
+                        binding.etName.getText().toString().equals("") ||
+                        binding.etSurname.getText().toString().equals("") ||
+                        binding.etPatronymic.getText().toString().equals("") ||
+                        binding.dateTextView.getText().toString().equals(R.string.newClient_noDate_dateTextView) ||
+                        binding.etTelephone.getText().toString().equals("") ||
+                        binding.etValueOfGuests.getText().toString().equals("") ||
+                        binding.etValueOfKids.getText().toString().equals("")) {
+                        showLongToastWithText(getContext(), "Все даные обязательны к заполнению");
+                }
+                else {
+                    if(inputValidation.isRowConsistsOfNumbers(binding.etPassportSeries.getText().toString()) &&
+                            inputValidation.isRowConsistsOfNumbers(binding.etPassportNumber.getText().toString()) &&
+                            inputValidation.isRowConsistsOfLetters(binding.etName.getText().toString()) &&
+                            inputValidation.isRowConsistsOfLetters(binding.etSurname.getText().toString()) &&
+                            inputValidation.isRowConsistsOfLetters(binding.etPatronymic.getText().toString()) &&
+                            inputValidation.isRowConsistsOfNumbers(binding.etTelephone.getText().toString()) &&
+                            inputValidation.isRowConsistsOfNumbers(binding.etValueOfGuests.getText().toString()) &&
+                            inputValidation.isRowConsistsOfNumbers(binding.etValueOfKids.getText().toString()) &&
+                            inputValidation.checkLenthOfPassportSeries(binding.etPassportSeries.getText().toString()) &&
+                            inputValidation.checkLenthOfPassportNumber(binding.etPassportNumber.getText().toString())
+                    ) {
+                        ClientRoom newClient = new ClientRoom(
+                                Integer.valueOf(binding.etPassportSeries.getText().toString()),
+                                Integer.valueOf(binding.etPassportNumber.getText().toString()),
+                                binding.etName.getText().toString(),
+                                binding.etSurname.getText().toString(),
+                                binding.etPatronymic.getText().toString(),
+                                chosenBirthdayDate,
+                                binding.etTelephone.getText().toString()
                         );
-                result.putInt("passportSeriesKey", newClient.passport_series);
-                result.putInt("passportNumberKey", newClient.passport_number);
-                result.putString("nameKey", newClient.name);
-                result.putString("surnameKey", newClient.surname);
-                result.putString("patronymicKey", newClient.patronymic);
-                result.putLong("birthdayKey", newClient.birthday);
-                result.putString("telephoneKey", newClient.telephone);
-                requireActivity().getSupportFragmentManager().setFragmentResult("newClientKey", result);
+                        valueOfGuests = Integer.valueOf(binding.etValueOfGuests.getText().toString());
+                        valueOfKids = Integer.valueOf(binding.etValueOfKids.getText().toString());
+
+                        result.putInt("passportSeriesKey", newClient.passport_series);
+                        result.putInt("passportNumberKey", newClient.passport_number);
+                        result.putString("nameKey", newClient.name);
+                        result.putString("surnameKey", newClient.surname);
+                        result.putString("patronymicKey", newClient.patronymic);
+                        result.putLong("birthdayKey", newClient.birthday);
+                        result.putString("telephoneKey", newClient.telephone);
+                        result.putInt("valueOfGuests", valueOfGuests);
+                        result.putInt("valueOfKids", valueOfKids);
+
+                        requireActivity().getSupportFragmentManager().setFragmentResult("newClientKey", result);
+                        MainActivity.navigateToClientRegistrationApartmentPicking();
+                    }
+                    else {
+                        showLongToastWithText(getContext(), "Некоррекный формат даннных");
+                    }
+                }
             }
         });
     }
+
+
 }
