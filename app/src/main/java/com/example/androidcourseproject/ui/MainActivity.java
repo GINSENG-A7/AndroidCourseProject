@@ -38,6 +38,9 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.example.androidcourseproject.databinding.ActivityMainBinding;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     static NavController navController;
     static PagerAdapter pagerAdapter;
     private static ClientsViewModel clientsViewModel;
+    public static boolean clientsListItemsDecorated = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,5 +110,20 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static void navigateToClient() {
         navController.navigate(R.id.navigation_clients);
+    }
+
+    public static long convertCalendarViewDateToLong( int year, int month, int dayOfMonth) {
+        long milliseconds = 0;
+        String yearStr = String.valueOf(year);
+        String monthStr = String.valueOf(month + 1);
+        String dayOfMonthStr = String.valueOf(dayOfMonth);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            Date date = simpleDateFormat.parse(yearStr + "-" + monthStr + "-" + dayOfMonthStr);
+            milliseconds = date.getTime();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return milliseconds;
     }
 }

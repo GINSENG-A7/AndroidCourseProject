@@ -64,8 +64,8 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             this.binding = binding;
         }
         public void bind(LivingRoom living, Actionable actionable) {
-            ClientRoom client = LivingsFragment.db.dao().getClientById(living.client_id).get(0);
-            ApartmentRoom apartment = LivingsFragment.db.dao().getApartmentById(living.apartment_id).get(0);;
+            ClientRoom client = LivingsFragment.db.dao().getClientById(living.client_id);
+            ApartmentRoom apartment = LivingsFragment.db.dao().getApartmentById(living.apartment_id);;
 
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);

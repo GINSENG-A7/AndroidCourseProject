@@ -9,12 +9,14 @@
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_apartments_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_bookings_list_item_layout.xml" value="0.25625" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_clientsList_item_layout.xml" value="0.34375" />
-        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_clients_list_item_layout.xml" value="0.1" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_clients_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_list_layout.xml" value="0.12001811594202899" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_livings_and_bookings_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_livings_list_item_layout.xml" value="0.25625" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/date_picker_layout.xml" value="0.3188405797101449" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/delete_confiramation_alert.xml" value="0.2223731884057971" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/edit_additional_services.xml" value="0.3392210144927536" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/edit_client_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_apartments.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_bookings.xml" value="0.338768115942029" />

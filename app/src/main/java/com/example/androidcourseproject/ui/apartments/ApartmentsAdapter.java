@@ -17,6 +17,7 @@ import com.example.androidcourseproject.ui.Actionable;
 import java.util.List;
 
 public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.ViewHolder> implements Actionable {
+
     public static List<ApartmentRoom> apartments;
     public static int checkedPosition = -1;
     public static int preCheckedPosition = -2;
@@ -49,6 +50,10 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
             notifyItemChanged(checkedPosition);
         }
         checkedPosition = position;
+    }
+
+    public void setApartments(List<ApartmentRoom> apartments) {
+        ApartmentsAdapter.apartments = apartments;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

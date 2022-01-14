@@ -19,7 +19,10 @@ import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.CustomClientsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.ui.Actionable;
+import com.example.androidcourseproject.ui.MainActivity;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHolder> implements Actionable {
@@ -67,11 +70,16 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             this.binding = binding;
         }
         public void bind(ClientRoom client, Actionable actionable) {
-            setDecorationSymbols();
+            if(MainActivity.clientsListItemsDecorated == false) {
+                setDecorationSymbols();
+                MainActivity.clientsListItemsDecorated = true;
+            }
+
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
             binding.tvName.setText(client.name);
             binding.tvSurname.setText(client.surname);
-            binding.tvBirthday.setText(String.valueOf(client.birthday));
+            binding.tvBirthday.setText(simpleDateFormat.format(new Date(client.birthday)));
             binding.tvPassportNumber.setText(String.valueOf(client.passport_number));
             binding.tvPassportSeries.setText(String.valueOf(client.passport_series));
             binding.tvPatronymicLabel.setText(client.patronymic);

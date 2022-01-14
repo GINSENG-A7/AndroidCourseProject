@@ -40,4 +40,14 @@
     <string name="newClient_evictionPick_buttonTitle">Choose eviction date</string>
     <string name="newClient_finishLivingRegistration_buttonTitle">Register living</string>
     <string name="newClient_finishBookingRegistration_buttonTitle">Register booking</string>
+    <string name="newClient_bottomPrice">Bottom price</string>
+    <string name="newClient_topPrice">Top price</string>
+
+    <string name="deleteTextView">Delete this entry?</string>
+
+    <string name="additional_services_miniBarTextView">Mini bar</string>
+    <string name="additional_services_clothesWashingTextView">Clothes washing</string>
+    <string name="additional_services_telephoneTextView">Telephone</string>
+    <string name="additional_services_intercityTelephoneTextView">Intercity telephone</string>
+    <string name="additional_services_foodTextView">Food</string>
 </resources>

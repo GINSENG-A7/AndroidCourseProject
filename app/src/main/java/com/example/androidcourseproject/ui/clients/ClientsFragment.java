@@ -1,5 +1,7 @@
 package com.example.androidcourseproject.ui.clients;
 
+import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,8 +20,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.FragmentClientsBinding;
+import com.example.androidcourseproject.room.AdditionalServicesRoom;
 import com.example.androidcourseproject.room.AppDatabase;
+import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.MainActivity;
 
 import java.util.List;
@@ -30,6 +35,13 @@ public class ClientsFragment extends Fragment {
     private FragmentClientsBinding binding;
     private ClientsAdapter adapter;
     public static AppDatabase db;
+    private EditText etEditPassportSeries;
+    private EditText etEditPassportNumber;
+    private EditText etEditName;
+    private EditText etEditSurname;
+    private EditText etEditPatronymic;
+    private EditText etEditBirthday;
+    private EditText etEditTelephone;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -84,13 +96,35 @@ public class ClientsFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             // send data from the AlertDialog to the Activity
                             EditText editText = customLayout.findViewById(R.id.tvEditPassportSeries);
-                            sendDialogDataToActivity(editText.getText().toString());
+                            showLongToastWithText(getContext(), editText.getText().toString());
+
+                            client.passport_series = Integer.valueOf(etEditPassportSeries.getText().toString());
+                            client.passport_number = Integer.valueOf(etEditPassportNumber.getText().toString());
+                            client.name = etEditName.getText().toString();
+                            client.surname = etEditSurname.getText().toString();
+                            client.patronymic = etEditPatronymic.getText().toString();
+                            client.birthday = Long.valueOf(etEditBirthday.getText().toString());
+                            client.telephone = etEditTelephone.getText().toString();
+                            db.dao().updateClient(client);
+                            adapter.notifyDataSetChanged();
+
+//                            db.dao().updateClient(new ClientRoom(
+//                                    Integer.valueOf(etEditPassportSeries.getText().toString()),
+//                                    Integer.valueOf(etEditPassportNumber.getText().toString()),
+//                                    etEditName.getText().toString(),
+//                                    etEditSurname.getText().toString(),
+//                                    etEditPatronymic.getText().toString(),
+//                                    Long.valueOf(etEditBirthday.getText().toString()),
+//                                    etEditTelephone.getText().toString()
+//                            ));
+
+                            showLongToastWithText(getContext(), "Запись успешно обновлена");
                         }
                     });
                     builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            sendDialogDataToActivity("Изменения отменены");
+                            showLongToastWithText(getContext(), "Изменения отменены");
                         }
                     });
 
@@ -99,13 +133,13 @@ public class ClientsFragment extends Fragment {
                     dialog.show();
 
                     //заполняем данные записи в соответствующие поля
-                    EditText etEditPassportSeries = customLayout.findViewById(R.id.tvEditPassportSeries);
-                    EditText etEditPassportNumber = customLayout.findViewById(R.id.tvEditPassportNumber);
-                    EditText etEditName = customLayout.findViewById(R.id.tvEditName);
-                    EditText etEditSurname = customLayout.findViewById(R.id.tvEditSurname);
-                    EditText etEditPatronymic = customLayout.findViewById(R.id.tvEditPatronymic);
-                    EditText etEditBirthday = customLayout.findViewById(R.id.tvEditBirthday);
-                    EditText etEditTelephone = customLayout.findViewById(R.id.tvEditTelephone);
+                    etEditPassportSeries = customLayout.findViewById(R.id.tvEditPassportSeries);
+                    etEditPassportNumber = customLayout.findViewById(R.id.tvEditPassportNumber);
+                    etEditName = customLayout.findViewById(R.id.tvEditName);
+                    etEditSurname = customLayout.findViewById(R.id.tvEditSurname);
+                    etEditPatronymic = customLayout.findViewById(R.id.tvEditPatronymic);
+                    etEditBirthday = customLayout.findViewById(R.id.tvEditBirthday);
+                    etEditTelephone = customLayout.findViewById(R.id.tvEditTelephone);
                     etEditPassportSeries.setText(String.valueOf(client.passport_series));
                     etEditPassportNumber.setText(String.valueOf(client.passport_number));
                     etEditName.setText(client.name);
@@ -147,21 +181,70 @@ public class ClientsFragment extends Fragment {
         binding.deleteClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ClientRoom client = adapter.getSelected();
+                if(client != null) {
+                    // clienteate an alert builder
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("Name");
 
+                    // set the custom layout
+                    final View customLayout = getLayoutInflater().inflate(R.layout.delete_confiramation_alert,
+                            null);
+                    builder.setView(customLayout);
+
+                    // add a button
+                    builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            List<BookingRoom> bookings = db.dao().getAllBookingsByClientId(client.client_id);
+                            db.dao().deleteBookings(bookings);
+
+                            List<LivingRoom> livings = db.dao().getAllLivingsByClientId(client.client_id);
+                            for (LivingRoom living: livings) {
+                                AdditionalServicesRoom additionalServices = db.dao().getAdditionalService(living.living_id);
+                                db.dao().deleteAdditionalService(additionalServices);
+                                db.dao().deleteLiving(living);
+                            }
+
+                            db.dao().deleteClient(client);
+                            showLongToastWithText(getContext(), "Запись успешно удалена");
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+                    builder.setNegativeButton("NO",  new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            showLongToastWithText(getContext(), "Изменения отменены");
+                        }
+                    });
+
+                    // clienteate and show the alert dialog
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                }
+                else {
+                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         binding.registerNewClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.navigateToClientRegistrationDataInputting();
+                if (adapter.getSelected() == null) {
+                    MainActivity.navigateToClientRegistrationDataInputting();
+                }
+                else {
+                    ClientRoom clientRoom = adapter.getSelected();
+                    Bundle result = new Bundle();
+                    result.putInt("clientIdKey", clientRoom.client_id);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("relatedClientKey", result);
+                    MainActivity.navigateToClientRegistrationDataInputting();
+                }
             }
         });
     }
 
-    private void sendDialogDataToActivity(String data) {
-        Toast.makeText(getContext(), data, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onStart() {

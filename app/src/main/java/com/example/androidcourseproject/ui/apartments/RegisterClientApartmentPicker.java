@@ -1,5 +1,6 @@
 package com.example.androidcourseproject.ui.apartments;
 
+import static com.example.androidcourseproject.ui.MainActivity.convertCalendarViewDateToLong;
 import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
 
 import android.content.Context;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentResultListener;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,10 +30,12 @@ import com.example.androidcourseproject.databinding.FragmentRegisterClientDataIn
 import com.example.androidcourseproject.room.AdditionalServicesRoom;
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.AppDatabase;
+import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.MainActivity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -53,6 +57,8 @@ public class RegisterClientApartmentPicker extends Fragment {
     private AdditionalServicesRoom additionalServices;
     private int valueOfGuests = 0;
     private int valueOfKids = 0;
+    private int bottomPrice = 0;
+    private int topPrice = Integer.MAX_VALUE;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,8 +72,8 @@ public class RegisterClientApartmentPicker extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         db = AppDatabase.getDataBase(getContext());
-        List<ApartmentRoom> list = db.dao().getAllApartments();
-        adapter = new ApartmentsAdapter(list);
+        List<ApartmentRoom> apartmentList = new ArrayList<ApartmentRoom>();
+        adapter = new ApartmentsAdapter(apartmentList);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
         binding.apartmentsList.setLayoutManager(layoutManager);
@@ -109,8 +115,6 @@ public class RegisterClientApartmentPicker extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chosenSettlingDate = calendarView.getDate();
-                        binding.tvSettlingDate.setText(new Date(chosenSettlingDate).toString());
                     }
                 });
                 builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
@@ -123,6 +127,16 @@ public class RegisterClientApartmentPicker extends Fragment {
                 // clienteate and show the alert dialog
                 AlertDialog dialog = builder.create();
                 calendarView = customLayout.findViewById(R.id.calendarView);
+
+                calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        chosenSettlingDate = convertCalendarViewDateToLong(year, month, dayOfMonth);
+                        binding.tvSettlingDate.setText(new Date(
+                                chosenSettlingDate).toString());
+                        Log.d("zxc", String.valueOf(chosenSettlingDate));
+                    }
+                });
 
                 dialog.show();
             }
@@ -144,8 +158,23 @@ public class RegisterClientApartmentPicker extends Fragment {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        chosenEvictionDate = calendarView.getDate();
-                        binding.tvEvictionDate.setText(new Date(chosenEvictionDate).toString());
+                        Log.d("intG", String.valueOf(chosenSettlingDate));
+                        Log.d("intG", String.valueOf(chosenEvictionDate));
+                        Log.d("intG", String.valueOf(bottomPrice));
+                        Log.d("intG", String.valueOf(topPrice));
+                        if(chosenSettlingDate < chosenEvictionDate && bottomPrice < topPrice) {
+                            List<ApartmentRoom> localApartmentList = db.dao().getFilteredApartments(
+                                    chosenSettlingDate,
+                                    chosenEvictionDate,
+                                    bottomPrice,
+                                    topPrice
+                            );
+                            adapter.setApartments(localApartmentList);
+                            adapter.notifyDataSetChanged();
+                        }
+                        else {
+                            showLongToastWithText(getContext(), "Даты заданы некорректно");
+                        }
                     }
                 });
                 builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
@@ -159,7 +188,58 @@ public class RegisterClientApartmentPicker extends Fragment {
                 AlertDialog dialog = builder.create();
                 calendarView = customLayout.findViewById(R.id.calendarView);
 
+                calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+                    @Override
+                    public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
+                        chosenEvictionDate = convertCalendarViewDateToLong(year, month, dayOfMonth);
+                        binding.tvEvictionDate.setText(new Date(chosenEvictionDate).toString());
+                        Log.d("zxc", String.valueOf(chosenEvictionDate));
+                    }
+                });
+
                 dialog.show();
+            }
+        });
+
+        binding.bottomPriceEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus == false) {
+                    if(!binding.bottomPriceEditText.getText().toString().equals("")) {
+                        bottomPrice = Integer.valueOf(binding.bottomPriceEditText.getText().toString());
+                    }
+                    else {
+                        bottomPrice = 0;
+                    }
+//                    List<ApartmentRoom> list = db.dao().getFilteredApartments(
+//                            chosenSettlingDate,
+//                            chosenEvictionDate,
+//                            bottomPrice,
+//                            topPrice
+//                    );
+//                    adapter = new ApartmentsAdapter(list);
+                }
+            }
+        });
+
+        binding.topPriceEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(hasFocus == false) {
+                    if(!binding.topPriceEditText.getText().toString().equals("")) {
+                        topPrice = Integer.valueOf(binding.topPriceEditText.getText().toString());
+                    }
+                    else {
+                        topPrice = Integer.MAX_VALUE;
+                    }
+//                    List<ApartmentRoom> list = db.dao().getFilteredApartments(
+//                            chosenSettlingDate,
+//                            chosenEvictionDate,
+//                            bottomPrice,
+//                            topPrice
+//                    );
+//                    adapter = new ApartmentsAdapter(list);
+                }
             }
         });
 
@@ -186,7 +266,17 @@ public class RegisterClientApartmentPicker extends Fragment {
         binding.registerNewBookingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                long lastInsertedClientId = db.dao().insertClient(client);
+                db.dao().insertBooking(new BookingRoom((int)lastInsertedClientId,
+                        chosenSettlingDate,
+                        chosenEvictionDate,
+                        valueOfGuests,
+                        valueOfKids,
+                        adapter.getSelected().apartment_id
+                ));
 
+                showLongToastWithText(getContext(), "Проживание успешно зарегистрированно!");
+                MainActivity.navigateToClient();
             }
         });
     }

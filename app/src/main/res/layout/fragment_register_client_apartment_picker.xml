@@ -10,7 +10,7 @@
         android:id="@+id/apartments_List"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/setSettlingDateButton"
+        app:layout_constraintBottom_toTopOf="@+id/bottomPriceEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,5 +72,27 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/registerNewLivingButton"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/bottomPriceEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newClient_bottomPrice"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/setSettlingDateButton"
+        app:layout_constraintEnd_toStartOf="@+id/topPriceEditText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/topPriceEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/newClient_topPrice"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/setSettlingDateButton"
+        app:layout_constraintStart_toEndOf="@+id/bottomPriceEditText"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
