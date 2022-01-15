@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentResultListener;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -26,7 +27,9 @@ import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.MainActivity;
+import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientsFragment extends Fragment {
@@ -75,6 +78,20 @@ public class ClientsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        requireActivity().getSupportFragmentManager()
+                .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                    @Override
+                    public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
+                        int clientId = bundle.getInt("clientId");
+                        if (clientId != 0) {
+                            ClientRoom relatedClient = db.dao().getClientById(clientId);
+                            List<ClientRoom> relatedClientsList = new ArrayList<ClientRoom>();
+                            relatedClientsList.add(relatedClient);
+                            adapter = new ClientsAdapter(relatedClientsList);
+                            binding.clientsList.setAdapter(adapter);
+                        }
+                    }
+                });
 
         binding.editClientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,6 +123,8 @@ public class ClientsFragment extends Fragment {
                             client.birthday = Long.valueOf(etEditBirthday.getText().toString());
                             client.telephone = etEditTelephone.getText().toString();
                             db.dao().updateClient(client);
+
+                            adapter.setClients(db.dao().getAllClients());
                             adapter.notifyDataSetChanged();
 
 //                            db.dao().updateClient(new ClientRoom(
@@ -139,7 +158,7 @@ public class ClientsFragment extends Fragment {
                     etEditSurname = customLayout.findViewById(R.id.tvEditSurname);
                     etEditPatronymic = customLayout.findViewById(R.id.tvEditPatronymic);
                     etEditBirthday = customLayout.findViewById(R.id.tvEditBirthday);
-                    etEditTelephone = customLayout.findViewById(R.id.tvEditTelephone);
+                    etEditTelephone = customLayout.findViewById(R.id.etEditTelephone);
                     etEditPassportSeries.setText(String.valueOf(client.passport_series));
                     etEditPassportNumber.setText(String.valueOf(client.passport_number));
                     etEditName.setText(client.name);
@@ -158,11 +177,16 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
-                MainActivity.navigateToLivingsAndBookings();
-                Bundle result = new Bundle();
-                result.putString("tabNameKey", "Livings");
-                result.putInt("clientId", client.client_id);
-                requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                if (client != null) {
+                    MainActivity.navigateToLivingsAndBookings();
+                    Bundle result = new Bundle();
+                    result.putString("tabNameKey", "Livings");
+                    result.putInt("clientId", client.client_id);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                }
+                else {
+                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -170,11 +194,16 @@ public class ClientsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
-                MainActivity.navigateToLivingsAndBookings();
-                Bundle result = new Bundle();
-                result.putString("tabNameKey", "Booking");
-                result.putInt("clientId", client.client_id);
-                requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                if (client != null) {
+                    MainActivity.navigateToLivingsAndBookings();
+                    Bundle result = new Bundle();
+                    result.putString("tabNameKey", "Booking");
+                    result.putInt("clientId", client.client_id);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                }
+                else {
+                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -201,13 +230,15 @@ public class ClientsFragment extends Fragment {
 
                             List<LivingRoom> livings = db.dao().getAllLivingsByClientId(client.client_id);
                             for (LivingRoom living: livings) {
-                                AdditionalServicesRoom additionalServices = db.dao().getAdditionalService(living.living_id);
+                                AdditionalServicesRoom additionalServices = db.dao().getAdditionalServiceByLivingId(living.living_id);
                                 db.dao().deleteAdditionalService(additionalServices);
                                 db.dao().deleteLiving(living);
                             }
 
                             db.dao().deleteClient(client);
                             showLongToastWithText(getContext(), "Запись успешно удалена");
+
+                            adapter.setClients(db.dao().getAllClients());
                             adapter.notifyDataSetChanged();
                         }
                     });

@@ -2,6 +2,7 @@ package com.example.androidcourseproject.ui.clients;
 
 import static com.example.androidcourseproject.ui.MainActivity.convertCalendarViewDateToLong;
 import static com.example.androidcourseproject.ui.MainActivity.db;
+import static com.example.androidcourseproject.ui.MainActivity.navigateToClients;
 import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -159,18 +160,42 @@ public class RegisterClientDataInputs extends Fragment {
                         valueOfGuests = Integer.valueOf(binding.etValueOfGuests.getText().toString());
                         valueOfKids = Integer.valueOf(binding.etValueOfKids.getText().toString());
 
-                        result.putInt("passportSeriesKey", newClient.passport_series);
-                        result.putInt("passportNumberKey", newClient.passport_number);
-                        result.putString("nameKey", newClient.name);
-                        result.putString("surnameKey", newClient.surname);
-                        result.putString("patronymicKey", newClient.patronymic);
-                        result.putLong("birthdayKey", newClient.birthday);
-                        result.putString("telephoneKey", newClient.telephone);
-                        result.putInt("valueOfGuests", valueOfGuests);
-                        result.putInt("valueOfKids", valueOfKids);
+                        ClientRoom checkingClient = db.dao().getClientsByPassportData(
+                                Integer.valueOf(binding.etPassportSeries.getText().toString()),
+                                Integer.valueOf(binding.etPassportNumber.getText().toString())
+                        );
 
-                        requireActivity().getSupportFragmentManager().setFragmentResult("newClientKey", result);
-                        MainActivity.navigateToClientRegistrationApartmentPicking();
+                        if(checkingClient != null &&
+                                newClient.passport_series == checkingClient.passport_number &&
+                                newClient.passport_number == checkingClient.passport_number) {
+                            if(!newClient.name.equals(checkingClient.name) &&
+                                    !newClient.surname.equals(checkingClient.surname) &&
+                                    !newClient.patronymic.equals(checkingClient.patronymic)) {
+                                showLongToastWithText(getContext(), "Запись с такими паспортными данными уже зарегистрированна");
+                            }
+                            if(newClient.name.equals(checkingClient.name) &&
+                                    newClient.surname.equals(checkingClient.surname) &&
+                                    newClient.patronymic.equals(checkingClient.patronymic)) {
+                                result.putInt("passportSeriesKey", checkingClient.passport_series);
+                                result.putInt("passportNumberKey", checkingClient.passport_number);
+                                result.putInt("valueOfGuests", valueOfGuests);
+                                result.putInt("valueOfKids", valueOfKids);
+                            }
+                        }
+                        else {
+                            result.putInt("passportSeriesKey", newClient.passport_series);
+                            result.putInt("passportNumberKey", newClient.passport_number);
+                            result.putString("nameKey", newClient.name);
+                            result.putString("surnameKey", newClient.surname);
+                            result.putString("patronymicKey", newClient.patronymic);
+                            result.putLong("birthdayKey", newClient.birthday);
+                            result.putString("telephoneKey", newClient.telephone);
+                            result.putInt("valueOfGuests", valueOfGuests);
+                            result.putInt("valueOfKids", valueOfKids);
+
+                            requireActivity().getSupportFragmentManager().setFragmentResult("newClientKey", result);
+                            MainActivity.navigateToClientRegistrationApartmentPicking();
+                        }
                     }
                     else {
                         showLongToastWithText(getContext(), "Некоррекный формат даннных");

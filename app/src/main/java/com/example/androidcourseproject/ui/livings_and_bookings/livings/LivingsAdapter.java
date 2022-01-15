@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidcourseproject.databinding.CustomLivingsAndBookingsListItemLayoutBinding;
 import com.example.androidcourseproject.room.ApartmentRoom;
+import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.Actionable;
+import com.example.androidcourseproject.ui.livings_and_bookings.bookings.BookingsAdapter;
 
 import java.util.List;
 
@@ -54,6 +56,10 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             notifyItemChanged(checkedPosition);
         }
         checkedPosition = position;
+    }
+
+    public void setLivings(List<LivingRoom> livings) {
+        LivingsAdapter.livings = livings;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

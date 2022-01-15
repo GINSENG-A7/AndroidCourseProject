@@ -29,8 +29,8 @@ public interface Dao {
     @Query("SELECT * FROM apartment")
     List<ApartmentRoom> getAllApartments();
 
-    @Query("SELECT * FROM client WHERE surname LIKE :surname ")
-    ClientRoom getClientsBySurname(String surname);
+    @Query("SELECT * FROM client WHERE passport_series = :passport_series & passport_number = :passport_number")
+    ClientRoom getClientsByPassportData(int passport_series, int passport_number);
 
     @Query("SELECT * FROM living WHERE client_id = :clientId")
     List<LivingRoom> getAllLivingsByClientId(int clientId);
@@ -39,7 +39,7 @@ public interface Dao {
     List<BookingRoom> getAllBookingsByClientId(int clientId);
 
     @Query("SELECT * FROM additional_services WHERE as_id = :livingId")
-    AdditionalServicesRoom getAdditionalService(int livingId);
+    AdditionalServicesRoom getAdditionalServiceByLivingId(int livingId);
 
     @Query("SELECT * FROM Apartment a WHERE a.price > :bp AND a.price < :tp AND ((a.apartment_id IN (SELECT apartment_id FROM Living WHERE eviction < :b1) AND NOT EXISTS(SELECT number FROM Booking WHERE a.apartment_id IN (SELECT apartment_id FROM Booking))) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE settling > :b2 ) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE eviction < :b1))) AND NOT EXISTS(SELECT apartment_id FROM Living WHERE a.apartment_id IN (SELECT apartment_id FROM Living)) OR ((a.apartment_id in (SELECT apartment_id FROM Living WHERE eviction < :b1)) AND (a.apartment_id in (SELECT apartment_id FROM Booking WHERE settling > :b2) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE eviction < :b1)))) OR (a.apartment_id NOT IN (SELECT apartment_id FROM Living) AND a.apartment_id NOT IN (SELECT apartment_id FROM Booking)))")
     List<ApartmentRoom> getFilteredApartments(long b1, long b2, int bp, int tp);
@@ -61,6 +61,9 @@ public interface Dao {
 
     @Update()
     void updateClient(ClientRoom updatedClient);
+
+    @Update()
+    void updateAdditionalService(AdditionalServicesRoom updatedAdditionalService);
 
     @Delete
     void deleteClient(ClientRoom client);

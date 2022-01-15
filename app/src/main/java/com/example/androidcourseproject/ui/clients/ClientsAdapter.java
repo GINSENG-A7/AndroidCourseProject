@@ -17,9 +17,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.CustomClientsListItemLayoutBinding;
+import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.Actionable;
 import com.example.androidcourseproject.ui.MainActivity;
+import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -60,6 +63,10 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             notifyItemChanged(checkedPosition);
         }
         checkedPosition = position;
+    }
+
+    public void setClients(List<ClientRoom> clients) {
+        ClientsAdapter.clients = clients;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

@@ -59,6 +59,7 @@ public class RegisterClientApartmentPicker extends Fragment {
     private int valueOfKids = 0;
     private int bottomPrice = 0;
     private int topPrice = Integer.MAX_VALUE;
+    boolean clientIsAlreadyRegistered = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,14 +89,22 @@ public class RegisterClientApartmentPicker extends Fragment {
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         valueOfGuests = bundle.getInt("valueOfGuests");
                         valueOfKids = bundle.getInt("valueOfKids");
-                        client = new ClientRoom(bundle.getInt("passportSeriesKey"),
-                                bundle.getInt("passportNumberKey"),
-                                bundle.getString("nameKey"),
-                                bundle.getString("surnameKey"),
-                                bundle.getString("patronymicKey"),
-                                bundle.getLong("birthdayKey"),
-                                bundle.getString("telephoneKey")
-                        );
+
+                        client = db.dao().getClientsByPassportData(bundle.getInt("passportSeriesKey"),
+                                bundle.getInt("passportNumberKey"));
+                        clientIsAlreadyRegistered = true;
+
+                        if (client == null) {
+                            client = new ClientRoom(bundle.getInt("passportSeriesKey"),
+                                    bundle.getInt("passportNumberKey"),
+                                    bundle.getString("nameKey"),
+                                    bundle.getString("surnameKey"),
+                                    bundle.getString("patronymicKey"),
+                                    bundle.getLong("birthdayKey"),
+                                    bundle.getString("telephoneKey")
+                            );
+                            clientIsAlreadyRegistered = false;
+                        }
                     }
         });
 
@@ -246,28 +255,40 @@ public class RegisterClientApartmentPicker extends Fragment {
         binding.registerNewLivingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long lastInsertedClientId = db.dao().insertClient(client);
+                long lastInsertedClientId = -1;
+                if(clientIsAlreadyRegistered == false) {
+                    lastInsertedClientId = db.dao().insertClient(client);
+                }
+                else {
+                    lastInsertedClientId = client.client_id;
+                }
                 long lastInsertedAdditionalServicesId = db.dao().insertAdditionalService(
                         new AdditionalServicesRoom(0, 0, 0, 0, 0));
-                db.dao().insertLiving(new LivingRoom((int)lastInsertedClientId,
+                db.dao().insertLiving(new LivingRoom((int) lastInsertedClientId,
                         chosenSettlingDate,
                         chosenEvictionDate,
                         valueOfGuests,
                         valueOfKids,
                         adapter.getSelected().apartment_id,
-                        (int)lastInsertedAdditionalServicesId
-                        ));
+                        (int) lastInsertedAdditionalServicesId
+                ));
 
                 showLongToastWithText(getContext(), "Проживание успешно зарегистрированно!");
-                MainActivity.navigateToClient();
+                MainActivity.navigateToClients();
             }
         });
 
         binding.registerNewBookingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                long lastInsertedClientId = db.dao().insertClient(client);
-                db.dao().insertBooking(new BookingRoom((int)lastInsertedClientId,
+                long lastInsertedClientId = -1;
+                if(clientIsAlreadyRegistered == false) {
+                    lastInsertedClientId = db.dao().insertClient(client);
+                }
+                else {
+                    lastInsertedClientId = client.client_id;
+                }
+                db.dao().insertBooking(new BookingRoom((int) lastInsertedClientId,
                         chosenSettlingDate,
                         chosenEvictionDate,
                         valueOfGuests,
@@ -275,8 +296,8 @@ public class RegisterClientApartmentPicker extends Fragment {
                         adapter.getSelected().apartment_id
                 ));
 
-                showLongToastWithText(getContext(), "Проживание успешно зарегистрированно!");
-                MainActivity.navigateToClient();
+                showLongToastWithText(getContext(), "Бронирование успешно зарегистрированно!");
+                MainActivity.navigateToClients();
             }
         });
     }

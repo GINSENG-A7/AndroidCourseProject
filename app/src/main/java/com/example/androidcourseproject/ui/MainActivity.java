@@ -108,7 +108,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Toast.makeText(context, text, Toast.LENGTH_LONG).show();
     }
 
-    public static void navigateToClient() {
+    public static void navigateToClients() {
         navController.navigate(R.id.navigation_clients);
     }
 

@@ -17,7 +17,7 @@
             android:text="@string/additional_services_miniBarTextView" />
 
         <EditText
-            android:id="@+id/tvEditMiniBar"
+            android:id="@+id/etEditMiniBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/additional_services_miniBarTextView" />
@@ -34,7 +34,7 @@
             android:text="@string/additional_services_clothesWashingTextView" />
 
         <EditText
-            android:id="@+id/tvEditClothesWashing"
+            android:id="@+id/etEditClothesWashing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/additional_services_clothesWashingTextView" />
@@ -51,7 +51,7 @@
             android:text="@string/additional_services_telephoneTextView" />
 
         <EditText
-            android:id="@+id/tvEditTelephone"
+            android:id="@+id/etEditTelephone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/additional_services_telephoneTextView" />
@@ -68,7 +68,7 @@
             android:text="@string/additional_services_intercityTelephoneTextView" />
 
         <EditText
-            android:id="@+id/tvEditIntercityTelephone"
+            android:id="@+id/etEditIntercityTelephone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/additional_services_intercityTelephoneTextView" />
@@ -85,7 +85,7 @@
             android:text="@string/additional_services_foodTextView" />
 
         <EditText
-            android:id="@+id/tvEditFood"
+            android:id="@+id/etEditFood"
             android:layout_width="255dp"
             android:layout_height="wrap_content"
             android:hint="@string/additional_services_foodTextView" />

@@ -14,6 +14,7 @@ import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
 import com.example.androidcourseproject.ui.Actionable;
+import com.example.androidcourseproject.ui.apartments.ApartmentsAdapter;
 
 import java.util.List;
 
@@ -54,6 +55,10 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             notifyItemChanged(checkedPosition);
         }
         checkedPosition = position;
+    }
+
+    public void setBookings(List<BookingRoom> bookings) {
+        BookingsAdapter.bookings = bookings;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
