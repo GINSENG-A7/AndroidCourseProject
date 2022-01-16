@@ -10,8 +10,7 @@
         android:id="@+id/apartments_List"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="2dp"
-        app:layout_constraintBottom_toTopOf="@+id/editApartmentButton"
+        app:layout_constraintBottom_toTopOf="@+id/showPhotosButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -40,6 +39,15 @@
         android:layout_height="wrap_content"
         android:text="@string/apartments_addNewApartment_buttonTitle"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/showPhotosButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/apartments_showPhotos_buttonTitle"
+        app:layout_constraintBottom_toTopOf="@+id/editApartmentButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

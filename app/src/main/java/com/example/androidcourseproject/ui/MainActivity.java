@@ -20,6 +20,7 @@ import com.example.androidcourseproject.room.AdditionalServicesRoom;
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.room.DiscountRoom;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.clients.ClientsFragment;
 import com.example.androidcourseproject.ui.clients.ClientsViewModel;
@@ -85,6 +86,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 //        ClientRoom client = db.dao().getClientsBySurname("ebooka");
 //        Log.d("zxc", String.valueOf(client.client_id));
         clientsViewModel = new ViewModelProvider(this).get(ClientsViewModel.class);
+
+        DiscountRoom discount = db.dao().getDiscount();
+        if (discount == null) {
+            discount = new DiscountRoom();
+            discount.discount = 0;
+            db.dao().insertDiscount(discount);
+        }
     }
 
     @Override

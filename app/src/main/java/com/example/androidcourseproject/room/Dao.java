@@ -44,6 +44,9 @@ public interface Dao {
     @Query("SELECT * FROM Apartment a WHERE a.price > :bp AND a.price < :tp AND ((a.apartment_id IN (SELECT apartment_id FROM Living WHERE eviction < :b1) AND NOT EXISTS(SELECT number FROM Booking WHERE a.apartment_id IN (SELECT apartment_id FROM Booking))) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE settling > :b2 ) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE eviction < :b1))) AND NOT EXISTS(SELECT apartment_id FROM Living WHERE a.apartment_id IN (SELECT apartment_id FROM Living)) OR ((a.apartment_id in (SELECT apartment_id FROM Living WHERE eviction < :b1)) AND (a.apartment_id in (SELECT apartment_id FROM Booking WHERE settling > :b2) OR (a.apartment_id in (SELECT apartment_id FROM Booking WHERE eviction < :b1)))) OR (a.apartment_id NOT IN (SELECT apartment_id FROM Living) AND a.apartment_id NOT IN (SELECT apartment_id FROM Booking)))")
     List<ApartmentRoom> getFilteredApartments(long b1, long b2, int bp, int tp);
 
+    @Query("SELECT * FROM discount")
+    DiscountRoom getDiscount();
+
     @Insert()
     long insertClient(ClientRoom client);
 
@@ -59,11 +62,17 @@ public interface Dao {
     @Insert()
     void insertApartment(ApartmentRoom apartment);
 
+    @Insert()
+    void insertDiscount(DiscountRoom discount);
+
     @Update()
     void updateClient(ClientRoom updatedClient);
 
     @Update()
     void updateAdditionalService(AdditionalServicesRoom updatedAdditionalService);
+
+    @Insert()
+    long updateDiscount(DiscountRoom discount);
 
     @Delete
     void deleteClient(ClientRoom client);

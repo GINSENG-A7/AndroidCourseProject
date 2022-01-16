@@ -4,6 +4,7 @@ import static com.example.androidcourseproject.ui.MainActivity.showLongToastWith
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,10 +80,11 @@ public class ClientsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().getSupportFragmentManager()
-                .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                .setFragmentResultListener("relatedClientKey", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         int clientId = bundle.getInt("clientId");
+                        Log.d("clientId", String.valueOf(clientId));
                         if (clientId != 0) {
                             ClientRoom relatedClient = db.dao().getClientById(clientId);
                             List<ClientRoom> relatedClientsList = new ArrayList<ClientRoom>();
@@ -178,11 +180,11 @@ public class ClientsFragment extends Fragment {
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
                 if (client != null) {
-                    MainActivity.navigateToLivingsAndBookings();
                     Bundle result = new Bundle();
                     result.putString("tabNameKey", "Livings");
                     result.putInt("clientId", client.client_id);
                     requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                    MainActivity.navigateToLivingsAndBookings();
                 }
                 else {
                     Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
@@ -195,11 +197,11 @@ public class ClientsFragment extends Fragment {
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
                 if (client != null) {
-                    MainActivity.navigateToLivingsAndBookings();
                     Bundle result = new Bundle();
                     result.putString("tabNameKey", "Booking");
                     result.putInt("clientId", client.client_id);
                     requireActivity().getSupportFragmentManager().setFragmentResult("requestKey", result);
+                    MainActivity.navigateToLivingsAndBookings();
                 }
                 else {
                     Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();

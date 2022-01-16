@@ -22,6 +22,7 @@
     <string name="apartments_editApartment_buttonTitle">Change chosen apartment info</string>
     <string name="apartments_deleteApartment_buttonTitle">Delete chosen apartment</string>
     <string name="apartments_addNewApartment_buttonTitle">Add new apartment</string>
+    <string name="apartments_showPhotos_buttonTitle">Show photos</string>
 
     <string name="client_passport_series">Passport series</string>
     <string name="client_passport_number">Passport number</string>
