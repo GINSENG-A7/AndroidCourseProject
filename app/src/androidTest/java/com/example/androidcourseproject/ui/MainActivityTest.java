@@ -46,12 +46,11 @@ public class MainActivityTest {
         onView(withId(R.id.clientsList)).check(matches(isDisplayed()));
     }
     @Test
-    public void RelationValues() {
+    public void RelatedValues() {
         RecyclerView rvClients = mActivityTestRule.getActivity().findViewById(R.id.clientsList);
 
         onView(withId(R.id.clientsList)).check(matches(isDisplayed()));
-        onView(withId(R.id.clientsList)).perform(RecyclerViewActions.actionOnItemAtPosition(1, click()));
-//        rvClients.getAdapter().getSelected();
+        onView(withId(R.id.clientsList)).perform(RecyclerViewActions.actionOnItemAtPosition(0, click()));
         onView(withId(R.id.registerNewClientButton)).perform(click());
         onView(withId(R.id.etPassportSeries)).check(ViewAssertions.matches(not(ViewMatchers.withText(""))));
         onView(withId(R.id.etPassportNumber)).check(ViewAssertions.matches(not(ViewMatchers.withText(""))));
@@ -59,6 +58,16 @@ public class MainActivityTest {
         onView(withId(R.id.etSurname)).check(ViewAssertions.matches(not(ViewMatchers.withText(""))));
         onView(withId(R.id.etPatronymic)).check(ViewAssertions.matches(not(ViewMatchers.withText(""))));
         onView(withId(R.id.dateTextView)).check(ViewAssertions.matches(not(ViewMatchers.withText(R.string.newClient_noDate_dateTextView))));
-//        onView(withId(R.id.clientsList)).check(matches(isNotClickable()));
+    }
+    @Test
+    public void UnRelatedValues() {
+        onView(withId(R.id.clientsList)).check(matches(isDisplayed()));
+        onView(withId(R.id.registerNewClientButton)).perform(click());
+        onView(withId(R.id.etPassportSeries)).check(ViewAssertions.matches(ViewMatchers.withText("")));
+        onView(withId(R.id.etPassportNumber)).check(ViewAssertions.matches(ViewMatchers.withText("")));
+        onView(withId(R.id.etName)).check(ViewAssertions.matches(ViewMatchers.withText("")));
+        onView(withId(R.id.etSurname)).check(ViewAssertions.matches(ViewMatchers.withText("")));
+        onView(withId(R.id.etPatronymic)).check(ViewAssertions.matches(ViewMatchers.withText("")));
+        onView(withId(R.id.dateTextView)).check(ViewAssertions.matches(ViewMatchers.withText(R.string.newClient_noDate_dateTextView)));
     }
 }

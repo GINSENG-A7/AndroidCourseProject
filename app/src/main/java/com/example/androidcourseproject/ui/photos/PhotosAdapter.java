@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.example.androidcourseproject.PictureHandler;
 import com.example.androidcourseproject.databinding.CustomPhotosListItemsLayoutBinding;
 import com.example.androidcourseproject.databinding.FragmentPhotosBinding;
 import com.example.androidcourseproject.room.ApartmentRoom;
@@ -34,6 +35,7 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
     public PhotosAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         CustomPhotosListItemsLayoutBinding binding = CustomPhotosListItemsLayoutBinding.inflate(inflater, parent, false);
+
         return new PhotosAdapter.ViewHolder(binding);
     }
 
@@ -61,13 +63,15 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final CustomPhotosListItemsLayoutBinding binding;
+        private PictureHandler pictureHandler = new PictureHandler();
 
         public ViewHolder(CustomPhotosListItemsLayoutBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
-        public void bind(PhotoRoom living, Actionable actionable) {
+        public void bind(PhotoRoom photo, Actionable actionable) {
 //            ApartmentRoom apartment = PhotosFragment.db.dao().getApartmentById(living.apartment_id);
+            binding.imageView.setImageBitmap(pictureHandler.ConvertPathToBitmap(photo.path));
 
             if(checkedPosition == -1) {
                 binding.getRoot().setBackgroundColor(Color.WHITE);

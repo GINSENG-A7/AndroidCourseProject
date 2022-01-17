@@ -50,6 +50,9 @@ public interface Dao {
     @Query("SELECT * FROM photo WHERE apartment_id = :apartmentId")
     List<PhotoRoom> getAllPhotosByApartmentId(int apartmentId);
 
+    @Query("SELECT * FROM apartment WHERE number = :number")
+    ApartmentRoom getApartmentByNumber(int number);
+
     @Insert()
     long insertClient(ClientRoom client);
 
@@ -77,6 +80,9 @@ public interface Dao {
     @Update()
     void updateAdditionalService(AdditionalServicesRoom updatedAdditionalService);
 
+    @Update()
+    void updateApartment(ApartmentRoom apartment);
+
     @Insert()
     long updateDiscount(DiscountRoom discount);
 
@@ -94,6 +100,12 @@ public interface Dao {
 
     @Delete
     void deleteAdditionalService(AdditionalServicesRoom additionalServices);
+
+    @Delete
+    void deletePhoto(PhotoRoom photo);
+
+    @Delete
+    void deletePhotos(List<PhotoRoom> photos);
 
     @Delete
     void deleteApartment(ApartmentRoom apartment);

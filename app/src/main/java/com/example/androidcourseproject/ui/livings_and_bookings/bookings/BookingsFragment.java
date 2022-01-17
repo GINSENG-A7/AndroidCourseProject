@@ -87,7 +87,7 @@ public class BookingsFragment extends Fragment {
                 if(booking != null) {
                     Bundle result = new Bundle();
                     result.putInt("clientId", booking.client_id);
-                    requireActivity().getSupportFragmentManager().setFragmentResult("relatedClientKey", result);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("ClientKey", result);
                     MainActivity.navigateToClients();
                 }
                 else {

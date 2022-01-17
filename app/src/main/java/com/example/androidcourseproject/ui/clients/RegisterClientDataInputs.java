@@ -56,7 +56,6 @@ public class RegisterClientDataInputs extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        inputValidation = new InputValidation();
 
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("relatedClientKey", this, new FragmentResultListener() {
@@ -203,6 +202,8 @@ public class RegisterClientDataInputs extends Fragment {
                 }
             }
         });
+
+        inputValidation = new InputValidation();
     }
 
 

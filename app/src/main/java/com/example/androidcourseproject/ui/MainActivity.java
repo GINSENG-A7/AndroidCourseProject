@@ -97,32 +97,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).onActivityResult(requestCode, resultCode, data);
-//    }
-
-    //    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.activity_top_menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        int id = item.getItemId();
-//        TextView infoTextView = findViewById(R.id.textView);
-//        switch (id){
-//            case (R.id.discount):
-//                infoTextView.setText("Выбран пункт Настройки");
-//                return true;
-//            default:
-//                return super.onOptionsItemSelected(item);
-//        }
-//    }
-
     /**
      * directly opens LivingsAndBookingsFragment
      */

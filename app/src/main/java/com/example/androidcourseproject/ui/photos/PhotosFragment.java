@@ -2,6 +2,8 @@ package com.example.androidcourseproject.ui.photos;
 
 import static android.app.Activity.RESULT_OK;
 
+import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
+
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,14 +19,17 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.androidcourseproject.InputValidation;
+import com.example.androidcourseproject.PictureHandler;
 import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.FragmentLivingsBinding;
 import com.example.androidcourseproject.databinding.FragmentPhotosBinding;
@@ -32,6 +37,7 @@ import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.AppDatabase;
 import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.room.PhotoRoom;
+import com.example.androidcourseproject.ui.MainActivity;
 import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookingsViewModel;
 import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsAdapter;
 
@@ -51,8 +57,9 @@ public class PhotosFragment extends Fragment {
     private FragmentPhotosBinding binding;
     private PhotosAdapter adapter;
     public static AppDatabase db;
-    private ApartmentRoom apartment;
-    public String localStorageFilesDirectory;
+    private static ApartmentRoom apartment;
+    public static String localStorageFilesDirectory;
+    private static PictureHandler pictureHandler;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,7 +73,7 @@ public class PhotosFragment extends Fragment {
 
         db = AppDatabase.getDataBase(getContext());
 
-
+        pictureHandler = new PictureHandler();
 
         return binding.getRoot();
     }
@@ -79,7 +86,7 @@ public class PhotosFragment extends Fragment {
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         int apartmentId = bundle.getInt("apartmentId");
-                        ApartmentRoom apartment = db.dao().getApartmentById(apartmentId);
+                        apartment = db.dao().getApartmentById(apartmentId);
                         List<PhotoRoom> photosList = db.dao().getAllPhotosByApartmentId(apartment.apartment_id);
                         adapter = new PhotosAdapter(photosList);
                         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
@@ -90,19 +97,29 @@ public class PhotosFragment extends Fragment {
                         binding.photosList.addItemDecoration(new DividerItemDecoration(getContext(),
                                 LinearLayoutManager.VERTICAL));
 
-                        localStorageFilesDirectory = getContext().getFilesDir().getAbsolutePath();
+                        localStorageFilesDirectory = getContext().getFilesDir().getAbsolutePath() + "/";
                     }
                 });
 
         binding.addPhotoButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, RESULT_OK);
+            showLongToastWithText(getContext(), "Запись успешно добавлена");
         });
 
         binding.deletePhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                PhotoRoom photo = adapter.getSelected();
+                if (photo != null) {
+                    db.dao().deletePhoto(photo);
+                    adapter.setPhotos(db.dao().getAllPhotosByApartmentId(apartment.apartment_id));
+                    adapter.notifyDataSetChanged();
+                    showLongToastWithText(getContext(), "Запись успешно удалена");
+                }
+                else {
+                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -115,12 +132,19 @@ public class PhotosFragment extends Fragment {
             Uri selectedImage = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), selectedImage);
-                String filePath = SaveImage(bitmap);
+                String filePath = pictureHandler.SaveImage(bitmap, localStorageFilesDirectory);
+
+//                int localApartmentId = data.getIntExtra("apartmentIntentKey", 0);
+                Log.d("maApartment", String.valueOf(apartment.apartment_id));
 
                 PhotoRoom photo = new PhotoRoom();
                 photo.path = filePath;
                 photo.apartment_id = apartment.apartment_id;
                 db.dao().insertPhoto(photo);
+
+                List<PhotoRoom> photosList = db.dao().getAllPhotosByApartmentId(apartment.apartment_id);
+                adapter.setPhotos(photosList);
+                adapter.notifyDataSetChanged();
 
                 Log.d("SaveImage", filePath);
             } catch (IOException e) {
@@ -128,39 +152,6 @@ public class PhotosFragment extends Fragment {
                 Log.d("SaveImage", e.getMessage());
             }
         }
-    }
-
-    private String SaveImage(Bitmap finalBitmap) {
-
-        File myDir = new File(localStorageFilesDirectory);
-        if (!myDir.exists()) {
-            myDir.mkdirs();
-        }
-
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fname = "Image-"+ n +".jpg";
-        File file = new File (myDir, fname);
-        if (file.exists ())
-            file.delete ();
-        try {
-            FileOutputStream out = new FileOutputStream(localStorageFilesDirectory + fname);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return localStorageFilesDirectory + fname;
-    }
-
-    private Bitmap ConvertPathToBitmap(String fileName) {
-        File image = new File(localStorageFilesDirectory, fileName);
-        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-        Bitmap bitmap = BitmapFactory.decodeFile(image.getAbsolutePath(),bmOptions);
-        return bitmap;
     }
 
 }

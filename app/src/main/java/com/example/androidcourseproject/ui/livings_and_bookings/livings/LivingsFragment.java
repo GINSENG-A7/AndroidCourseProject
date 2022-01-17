@@ -93,7 +93,7 @@ public class LivingsFragment extends Fragment {
                 if(living != null) {
                     Bundle result = new Bundle();
                     result.putInt("clientId", living.client_id);
-                    requireActivity().getSupportFragmentManager().setFragmentResult("relatedClientKey", result);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("ClientKey", result);
                     MainActivity.navigateToClients();
                 }
                 else {

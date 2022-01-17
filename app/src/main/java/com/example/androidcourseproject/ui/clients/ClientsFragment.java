@@ -80,7 +80,7 @@ public class ClientsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().getSupportFragmentManager()
-                .setFragmentResultListener("relatedClientKey", this, new FragmentResultListener() {
+                .setFragmentResultListener("ClientKey", this, new FragmentResultListener() {
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         int clientId = bundle.getInt("clientId");

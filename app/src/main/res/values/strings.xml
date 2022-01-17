@@ -56,4 +56,8 @@
 
     <string name="photos_delete_buttonTitle">Delete photo</string>
     <string name="photos_add_buttonTitle">Add photo</string>
+
+    <string name="apartments_numberTextView">Number</string>
+    <string name="apartments_typeTextView">Type</string>
+    <string name="apartments_priceTextView">Price</string>
 </resources>
