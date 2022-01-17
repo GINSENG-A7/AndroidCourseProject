@@ -2,15 +2,19 @@ package com.example.androidcourseproject.ui;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.androidcourseproject.R;
@@ -28,6 +32,7 @@ import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookin
 import com.example.androidcourseproject.ui.livings_and_bookings.PagerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -75,16 +80,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         NavigationUI.setupWithNavController(binding.navView, navController);
 
 
-//
-//        dbHelper = new DbHelper(getApplicationContext());
-//        database = dbHelper.getWritableDatabase();
         db = AppDatabase.getDataBase(getBaseContext());
-//        db.dao().insertClient(new ClientRoom(123, 123, "asd", "asd", "zxc", "zxc", "zxc"));
-//        db.dao().insertApartment(new ApartmentRoom(1, "aboba", 123));
-//        db.dao().insertAdditionalService(new AdditionalServicesRoom(1, 1, 1, 1, 1));
-//        db.dao().insertLiving(new LivingRoom(1, "zxc", "zxc", 1, 1, 1, 1));
-//        ClientRoom client = db.dao().getClientsBySurname("ebooka");
-//        Log.d("zxc", String.valueOf(client.client_id));
+
         clientsViewModel = new ViewModelProvider(this).get(ClientsViewModel.class);
 
         DiscountRoom discount = db.dao().getDiscount();
@@ -100,6 +97,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment_activity_main).onActivityResult(requestCode, resultCode, data);
+//    }
+
+    //    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.activity_top_menu, menu);
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//        TextView infoTextView = findViewById(R.id.textView);
+//        switch (id){
+//            case (R.id.discount):
+//                infoTextView.setText("Выбран пункт Настройки");
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
+    /**
+     * directly opens LivingsAndBookingsFragment
+     */
     public static void navigateToLivingsAndBookings() {
         navController.navigate(R.id.navigation_livings_and_bookings);
     }
@@ -118,6 +144,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public static void navigateToClients() {
         navController.navigate(R.id.navigation_clients);
+    }
+
+    public static void navigateToPhotos() {
+        navController.navigate(R.id.photosFragment);
     }
 
     public static long convertCalendarViewDateToLong( int year, int month, int dayOfMonth) {

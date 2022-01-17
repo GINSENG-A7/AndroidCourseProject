@@ -3,7 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.16" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/activity_menu_layout.xml" value="0.25" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/adding_new_client_apartment_picker.xml" value="0.25833333333333336" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/adding_new_client_data_inputs.xml" value="0.25" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_apartments_list_item_layout.xml" value="0.33" />
@@ -14,6 +15,7 @@
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_list_layout.xml" value="0.12001811594202899" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_livings_and_bookings_list_item_layout.xml" value="0.33" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_livings_list_item_layout.xml" value="0.25625" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/custom_photos_list_items.xml" value="0.34375" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/date_picker_layout.xml" value="0.3188405797101449" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/delete_confiramation_alert.xml" value="0.2223731884057971" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/edit_additional_services.xml" value="0.3392210144927536" />
@@ -25,8 +27,11 @@
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_item_list.xml" value="0.25833333333333336" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_livings.xml" value="0.338768115942029" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_livings_and_bookings.xml" value="0.33" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_photos.xml" value="0.25" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_register_client_apartment_picker.xml" value="0.3378623188405797" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/fragment_register_client_data_inputs.xml" value="0.33" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/layout/photos_fragment.xml" value="0.34193840579710144" />
+        <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/menu/activity_top_menu.xml" value="0.25" />
         <entry key="..\:/J/Android/AndroidCourseProject/app/src/main/res/menu/bottom_nav_menu.xml" value="0.25" />
         <entry key="..\:/Users/1/AndroidStudioProjects/AndroidCourseProject/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/1/AndroidStudioProjects/AndroidCourseProject/app/src/main/res/layout/fragment_apartments.xml" value="0.33" />

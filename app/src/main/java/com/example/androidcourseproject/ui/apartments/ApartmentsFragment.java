@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -17,7 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.androidcourseproject.databinding.FragmentApartmentsBinding;
 import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.AppDatabase;
+import com.example.androidcourseproject.room.BookingRoom;
 import com.example.androidcourseproject.room.ClientRoom;
+import com.example.androidcourseproject.ui.MainActivity;
 import com.example.androidcourseproject.ui.clients.ClientsAdapter;
 
 import java.util.List;
@@ -55,6 +58,48 @@ public class ApartmentsFragment extends Fragment {
                 LinearLayoutManager.VERTICAL));
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        binding.showPhotosButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ApartmentRoom apartment = adapter.getSelected();
+                if(apartment != null) {
+                    Bundle result = new Bundle();
+                    result.putInt("apartmentId", apartment.apartment_id);
+                    requireActivity().getSupportFragmentManager().setFragmentResult("relatedApartmentKey", result);
+                    MainActivity.navigateToPhotos();
+                }
+                else {
+                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        binding.editApartmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.deleteApartmentButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        binding.addNewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     @Override

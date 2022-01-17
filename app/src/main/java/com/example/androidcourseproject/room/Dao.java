@@ -47,6 +47,9 @@ public interface Dao {
     @Query("SELECT * FROM discount")
     DiscountRoom getDiscount();
 
+    @Query("SELECT * FROM photo WHERE apartment_id = :apartmentId")
+    List<PhotoRoom> getAllPhotosByApartmentId(int apartmentId);
+
     @Insert()
     long insertClient(ClientRoom client);
 
@@ -64,6 +67,9 @@ public interface Dao {
 
     @Insert()
     void insertDiscount(DiscountRoom discount);
+
+    @Insert()
+    void insertPhoto(PhotoRoom photo);
 
     @Update()
     void updateClient(ClientRoom updatedClient);

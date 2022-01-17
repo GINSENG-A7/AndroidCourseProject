@@ -17,7 +17,7 @@ public class PhotoRoom {
     @PrimaryKey(autoGenerate = true)
     public int photo_id;
     @ColumnInfo(name = "path")
-    public int path;
+    public String path;
     @ColumnInfo(name = "apartment_id")
     public int apartment_id;
 }

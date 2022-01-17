@@ -51,4 +51,9 @@
     <string name="additional_services_telephoneTextView">Telephone</string>
     <string name="additional_services_intercityTelephoneTextView">Intercity telephone</string>
     <string name="additional_services_foodTextView">Food</string>
+
+    <string name="discount_setting">Discount</string>
+
+    <string name="photos_delete_buttonTitle">Delete photo</string>
+    <string name="photos_add_buttonTitle">Add photo</string>
 </resources>
