@@ -44,24 +44,6 @@ public class InputValidation {
         }
     }
 
-    public static boolean checkUniquenessObjectInToDataBase(String str, ArrayList<String> list) {
-        for (String item : list) {
-            if (item.equals(str)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public static boolean checkUniquenessObjectInToDataBase(String str, Integer id, ArrayList<String> list, ArrayList<Integer> idList) {
-        for (int i = 0; i < list.size(); i++) {
-            if ((list.get(i).equals(str)) && !idList.get(i).equals(id)) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public boolean checkLenthOfPassportSeries(String str) {
         return str.length() == 4;
     }

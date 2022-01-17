@@ -29,12 +29,12 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/apartments_deleteApartment_buttonTitle"
-        app:layout_constraintBottom_toTopOf="@id/addNewButton"
+        app:layout_constraintBottom_toTopOf="@id/addNewApartmentButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/addNewButton"
+        android:id="@+id/addNewApartmentButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/apartments_addNewApartment_buttonTitle"

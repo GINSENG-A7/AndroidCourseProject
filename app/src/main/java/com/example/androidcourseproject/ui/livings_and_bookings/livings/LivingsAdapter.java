@@ -19,6 +19,9 @@ import com.example.androidcourseproject.ui.livings_and_bookings.bookings.Booking
 
 import java.util.List;
 
+/**
+ * Livings RecyclerView handler
+ */
 public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHolder> implements Actionable {
     public static List<LivingRoom> livings;
     public static List<ClientRoom> clients;
@@ -50,6 +53,10 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
         return livings.size();
     }
 
+    /**
+     * Allows to set chosen item in Livings RecyclerView
+     * @param position
+     */
     @Override
     public void updateItem(int position) {
         if(checkedPosition != -1 && checkedPosition != position) {
@@ -69,6 +76,12 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
             super(binding.getRoot());
             this.binding = binding;
         }
+
+        /**
+         * fills data fields parameters if living entry is selected and mark selected entry with color
+         * @param living
+         * @param actionable
+         */
         public void bind(LivingRoom living, Actionable actionable) {
             ClientRoom client = LivingsFragment.db.dao().getClientById(living.client_id);
             ApartmentRoom apartment = LivingsFragment.db.dao().getApartmentById(living.apartment_id);;
@@ -113,6 +126,10 @@ public class LivingsAdapter extends RecyclerView.Adapter<LivingsAdapter.ViewHold
         }
     }
 
+    /**
+     * returns selected item in Livings RecyclerView
+     * @return
+     */
     public LivingRoom getSelected() {
         if (checkedPosition != -1) {
             return livings.get(checkedPosition);

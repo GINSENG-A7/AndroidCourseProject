@@ -1,7 +1,5 @@
 package com.example.androidcourseproject.ui.livings_and_bookings.bookings;
 
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,6 +31,9 @@ import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsA
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment with bookings handling
+ */
 public class BookingsFragment extends Fragment {
     private ClientsViewModel clientsViewModel;
     private LivingsAndBookingsViewModel livingsAndBookingsViewModel;
@@ -40,7 +41,14 @@ public class BookingsFragment extends Fragment {
     private BookingsAdapter adapter;
     public static AppDatabase db;
     private InputValidation inputValidation;
-    
+
+    /**
+     * Inserts all bookings entries to recycler view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,6 +74,11 @@ public class BookingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                    /**
+                     * Sets clients related bookings to recycler view
+                     * @param key
+                     * @param bundle
+                     */
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         String result = bundle.getString("tabNameKey");
@@ -78,9 +91,12 @@ public class BookingsFragment extends Fragment {
                     }
                 });
 
-        //***************************************************
 
         binding.goToClientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens ClientsFragment and set clients id to it
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 BookingRoom booking = adapter.getSelected();
@@ -97,6 +113,10 @@ public class BookingsFragment extends Fragment {
         });
 
         binding.deleteEntryButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Delete bookings entry if it is selected
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 BookingRoom booking = adapter.getSelected();
@@ -116,13 +136,13 @@ public class BookingsFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             AdditionalServicesRoom additionalService = db.dao().getAdditionalServiceByLivingId(booking.booking_id);
                             db.dao().deleteBooking(booking);
-                            showLongToastWithText(getContext(), "Запись успешно удалена");
+                            Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyDeleted, Toast.LENGTH_LONG).show();
                         }
                     });
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG);
                         }
                     });
 

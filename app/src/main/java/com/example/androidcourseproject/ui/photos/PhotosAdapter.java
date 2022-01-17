@@ -19,6 +19,9 @@ import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
+/**
+ * Photos RecyclerView handler
+ */
 public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder> implements Actionable{
     public static List<PhotoRoom> photos;
     public static List<ApartmentRoom> apartments;
@@ -49,6 +52,10 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         return photos.size();
     }
 
+    /**
+     * Allows to set chosen item in Photos RecyclerView
+     * @param position
+     */
     @Override
     public void updateItem(int position) {
         if(checkedPosition != -1 && checkedPosition != position) {
@@ -69,8 +76,13 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
             super(binding.getRoot());
             this.binding = binding;
         }
+
+        /**
+         * fills data fields parameters if photo entry is selected and mark selected entry with color
+         * @param photo
+         * @param actionable
+         */
         public void bind(PhotoRoom photo, Actionable actionable) {
-//            ApartmentRoom apartment = PhotosFragment.db.dao().getApartmentById(living.apartment_id);
             binding.imageView.setImageBitmap(pictureHandler.ConvertPathToBitmap(photo.path));
 
             if(checkedPosition == -1) {
@@ -104,6 +116,9 @@ public class PhotosAdapter extends RecyclerView.Adapter<PhotosAdapter.ViewHolder
         }
     }
 
+    /**
+     * returns selected item in Photos RecyclerView
+     * */
     public PhotoRoom getSelected() {
         if (checkedPosition != -1) {
             return photos.get(checkedPosition);

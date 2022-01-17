@@ -7,27 +7,21 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.Toast;
 
-import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.androidcourseproject.R;
 import com.example.androidcourseproject.databinding.CustomClientsListItemLayoutBinding;
-import com.example.androidcourseproject.room.ApartmentRoom;
 import com.example.androidcourseproject.room.ClientRoom;
-import com.example.androidcourseproject.room.LivingRoom;
 import com.example.androidcourseproject.ui.Actionable;
-import com.example.androidcourseproject.ui.MainActivity;
-import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsAdapter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Clients RecyclerView handler
+ */
 public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHolder> implements Actionable {
     public static List<ClientRoom> clients;
     public static int checkedPosition = -1;
@@ -49,7 +43,6 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(clients.get(position), this);
-//        holder.binding.getRoot().setBackgroundColor(Color.parseColor("#ffffff"));
     }
 
     @Override
@@ -57,6 +50,10 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
         return clients.size();
     }
 
+    /**
+     * Allows to set chosen item in Clients RecyclerView
+     * @param position
+     */
     @Override
     public void updateItem(int position) {
         if(checkedPosition != -1 && checkedPosition != position) {
@@ -76,11 +73,13 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
             super(binding.getRoot());
             this.binding = binding;
         }
+
+        /**
+         * fills data fields parameters if client entry is selected and mark selected entry with color
+         * @param client
+         * @param actionable
+         */
         public void bind(ClientRoom client, Actionable actionable) {
-//            if(MainActivity.clientsListItemsDecorated == false) {
-//                setDecorationSymbols();
-//                MainActivity.clientsListItemsDecorated = true;
-//            }
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
@@ -118,21 +117,13 @@ public class ClientsAdapter extends RecyclerView.Adapter<ClientsAdapter.ViewHold
                         checkedPosition = getAdapterPosition();
                     }
                 }
-
             });
         }
-
-//        private void setDecorationSymbols() {
-//            binding.passportSeriesLabel.setText(binding.passportSeriesLabel.getText().toString() + ": ");
-//            binding.passportNumberLabel.setText(binding.passportNumberLabel.getText().toString() + ": ");
-//            binding.nameLabel.setText(binding.nameLabel.getText().toString() + ": ");
-//            binding.surnameLabel.setText(binding.surnameLabel.getText().toString() + ": ");
-//            binding.patronymicLabel.setText(binding.patronymicLabel.getText().toString() + ": ");
-//            binding.birthdayLabel.setText(binding.birthdayLabel.getText().toString() + ": ");
-//            binding.telephoneLabel.setText(binding.telephoneLabel.getText().toString() + ": ");
-//        }
     }
 
+    /**
+     * returns selected item in Clients RecyclerView
+     * */
     public ClientRoom getSelected() {
         if (checkedPosition != -1) {
             return clients.get(checkedPosition);

@@ -1,7 +1,5 @@
 package com.example.androidcourseproject.ui.clients;
 
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
@@ -33,6 +31,9 @@ import com.example.androidcourseproject.ui.livings_and_bookings.livings.LivingsA
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Fragment with clients handling
+ */
 public class ClientsFragment extends Fragment {
 
     private ClientsViewModel clientsViewModel;
@@ -54,13 +55,7 @@ public class ClientsFragment extends Fragment {
 
         binding = FragmentClientsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-//        final TextView textView = binding.textHome;
-//        clientsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
-//            @Override
-//            public void onChanged(@Nullable String s) {
-//                textView.setText(s);
-//            }
-//        });
+
         db = AppDatabase.getDataBase(getContext());
         List<ClientRoom> list = db.dao().getAllClients();
         adapter = new ClientsAdapter(list);
@@ -96,6 +91,10 @@ public class ClientsFragment extends Fragment {
                 });
 
         binding.editClientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom alert to edit client data
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
@@ -115,7 +114,7 @@ public class ClientsFragment extends Fragment {
                         public void onClick(DialogInterface dialog, int which) {
                             // send data from the AlertDialog to the Activity
                             EditText editText = customLayout.findViewById(R.id.tvEditPassportSeries);
-                            showLongToastWithText(getContext(), editText.getText().toString());
+                            Toast.makeText(getContext(), editText.getText().toString(), Toast.LENGTH_SHORT).show();
 
                             client.passport_series = Integer.valueOf(etEditPassportSeries.getText().toString());
                             client.passport_number = Integer.valueOf(etEditPassportNumber.getText().toString());
@@ -129,23 +128,14 @@ public class ClientsFragment extends Fragment {
                             adapter.setClients(db.dao().getAllClients());
                             adapter.notifyDataSetChanged();
 
-//                            db.dao().updateClient(new ClientRoom(
-//                                    Integer.valueOf(etEditPassportSeries.getText().toString()),
-//                                    Integer.valueOf(etEditPassportNumber.getText().toString()),
-//                                    etEditName.getText().toString(),
-//                                    etEditSurname.getText().toString(),
-//                                    etEditPatronymic.getText().toString(),
-//                                    Long.valueOf(etEditBirthday.getText().toString()),
-//                                    etEditTelephone.getText().toString()
-//                            ));
 
-                            showLongToastWithText(getContext(), "Запись успешно обновлена");
+                            Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyUpdated, Toast.LENGTH_LONG).show();
                         }
                     });
                     builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -170,7 +160,7 @@ public class ClientsFragment extends Fragment {
                     etEditTelephone.setText(client.telephone);
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -187,7 +177,7 @@ public class ClientsFragment extends Fragment {
                     MainActivity.navigateToLivingsAndBookings();
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -204,12 +194,16 @@ public class ClientsFragment extends Fragment {
                     MainActivity.navigateToLivingsAndBookings();
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         binding.deleteClientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Delete clients entry if it is selected
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 ClientRoom client = adapter.getSelected();
@@ -238,7 +232,7 @@ public class ClientsFragment extends Fragment {
                             }
 
                             db.dao().deleteClient(client);
-                            showLongToastWithText(getContext(), "Запись успешно удалена");
+                            Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyDeleted, Toast.LENGTH_LONG).show();
 
                             adapter.setClients(db.dao().getAllClients());
                             adapter.notifyDataSetChanged();
@@ -247,7 +241,7 @@ public class ClientsFragment extends Fragment {
                     builder.setNegativeButton("NO",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -256,12 +250,16 @@ public class ClientsFragment extends Fragment {
                     dialog.show();
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         binding.registerNewClientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens RegisterClientDataInputs fragment and puts client id in it
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if (adapter.getSelected() == null) {
@@ -278,25 +276,10 @@ public class ClientsFragment extends Fragment {
         });
     }
 
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        List<ClientRoom> clientList = MainActivity.db.dao().getAllClients();
-        if (clientList.size() > 0) {
-            setArrayAdapter(clientList);
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
     }
 
-    public void setArrayAdapter(List<ClientRoom> listOfClientsRooms) {
-        if (listOfClientsRooms.size() <= 0) {
-            throw new RuntimeException("Выводимые таблицы пусты");
-        }
-    }
 }

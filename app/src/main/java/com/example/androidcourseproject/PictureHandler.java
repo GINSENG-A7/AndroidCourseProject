@@ -8,6 +8,12 @@ import java.io.FileOutputStream;
 import java.util.Random;
 
 public class PictureHandler {
+    /**
+     * Saves Bitmap picture to specified directory on device storage and returns full path of saved image
+     * @param finalBitmap
+     * @param filesDirectory
+     * @return
+     */
     public String SaveImage(Bitmap finalBitmap, String filesDirectory) {
         File myDir = new File(filesDirectory);
         if (!myDir.exists()) {
@@ -33,6 +39,11 @@ public class PictureHandler {
         return filesDirectory + fname;
     }
 
+    /**
+     * Converts file located in device storage by specified path to Bitmap
+     * @param filePath
+     * @return
+     */
     public Bitmap ConvertPathToBitmap(String filePath) {
         File image = new File(filePath);
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();

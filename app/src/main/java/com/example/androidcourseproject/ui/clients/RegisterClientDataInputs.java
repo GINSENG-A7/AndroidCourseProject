@@ -3,7 +3,6 @@ package com.example.androidcourseproject.ui.clients;
 import static com.example.androidcourseproject.ui.MainActivity.convertCalendarViewDateToLong;
 import static com.example.androidcourseproject.ui.MainActivity.db;
 import static com.example.androidcourseproject.ui.MainActivity.navigateToClients;
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
@@ -32,9 +31,7 @@ import java.util.Date;
 import com.example.androidcourseproject.InputValidation;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterClientDataInputs} factory method to
- * create an instance of this fragment.
+ * First stage of client registration fragment
  */
 public class RegisterClientDataInputs extends Fragment {
     private FragmentRegisterClientDataInputsBinding binding;
@@ -59,6 +56,11 @@ public class RegisterClientDataInputs extends Fragment {
 
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("relatedClientKey", this, new FragmentResultListener() {
+                    /**
+                     * paste client data if client was selected before
+                     * @param key
+                     * @param bundle
+                     */
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         int clientId = bundle.getInt("clientIdKey");
@@ -76,6 +78,10 @@ public class RegisterClientDataInputs extends Fragment {
                 });
 
         binding.chooseBirthdayButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom alert to pick client's birthday date
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 // clienteate an alert builder
@@ -120,6 +126,10 @@ public class RegisterClientDataInputs extends Fragment {
         });
 
         binding.nextStepButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens RegisterClientApartmentPicker fragment and put client data inside it
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Bundle result = new Bundle();
@@ -133,7 +143,7 @@ public class RegisterClientDataInputs extends Fragment {
                         binding.etTelephone.getText().toString().equals("") ||
                         binding.etValueOfGuests.getText().toString().equals("") ||
                         binding.etValueOfKids.getText().toString().equals("")) {
-                        showLongToastWithText(getContext(), "Все даные обязательны к заполнению");
+                    Toast.makeText(getContext(), R.string.toasts_AllDataFieldsAreRequired, Toast.LENGTH_SHORT).show();
                 }
                 else {
                     if(inputValidation.isRowConsistsOfNumbers(binding.etPassportSeries.getText().toString()) &&
@@ -170,7 +180,7 @@ public class RegisterClientDataInputs extends Fragment {
                             if(!newClient.name.equals(checkingClient.name) &&
                                     !newClient.surname.equals(checkingClient.surname) &&
                                     !newClient.patronymic.equals(checkingClient.patronymic)) {
-                                showLongToastWithText(getContext(), "Запись с такими паспортными данными уже зарегистрированна");
+                                Toast.makeText(getContext(), R.string.toasts_ClientWithSuchPassportDataAlreadyAdded, Toast.LENGTH_LONG).show();
                             }
                             if(newClient.name.equals(checkingClient.name) &&
                                     newClient.surname.equals(checkingClient.surname) &&
@@ -197,7 +207,7 @@ public class RegisterClientDataInputs extends Fragment {
                         }
                     }
                     else {
-                        showLongToastWithText(getContext(), "Некоррекный формат даннных");
+                        Toast.makeText(getContext(), R.string.toasts_InvalidDataInput, Toast.LENGTH_LONG).show();
                     }
                 }
             }

@@ -16,6 +16,9 @@ import com.example.androidcourseproject.ui.Actionable;
 
 import java.util.List;
 
+/**
+ * Apartments RecyclerView handler
+ */
 public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.ViewHolder> implements Actionable {
 
     public static List<ApartmentRoom> apartments;
@@ -44,6 +47,10 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
         return apartments.size();
     }
 
+    /**
+     * Allows to set chosen item in Apartments RecyclerView
+     * @param position
+     */
     @Override
     public void updateItem(int position) {
         if(checkedPosition != -1 && checkedPosition != position) {
@@ -63,6 +70,11 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
             this.binding = binding;
         }
 
+        /**
+         * fills data fields parameters if apartment entry is selected and mark selected entry with color
+         * @param apartment
+         * @param actionable
+         */
         public void bind(ApartmentRoom apartment, Actionable actionable) {
             binding.tvNumber.setText(String.valueOf(apartment.number));
             binding.tvType.setText(apartment.type);
@@ -99,6 +111,9 @@ public class ApartmentsAdapter extends RecyclerView.Adapter<ApartmentsAdapter.Vi
         }
     }
 
+    /**
+     * returns selected item in Apartments RecyclerView
+     * */
     public ApartmentRoom getSelected() {
         if (checkedPosition != -1) {
             return apartments.get(checkedPosition);

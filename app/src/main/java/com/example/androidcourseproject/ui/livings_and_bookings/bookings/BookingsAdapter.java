@@ -18,6 +18,9 @@ import com.example.androidcourseproject.ui.apartments.ApartmentsAdapter;
 
 import java.util.List;
 
+/**
+ * Bookings RecyclerView handler
+ */
 public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> implements Actionable {
     public static List<BookingRoom> bookings;
     public static List<ClientRoom> clients;
@@ -49,6 +52,10 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         return bookings.size();
     }
 
+    /**
+     * Allows to set chosen item in Bookings RecyclerView
+     * @param position
+     */
     @Override
     public void updateItem(int position) {
         if(checkedPosition != -1 && checkedPosition != position) {
@@ -68,6 +75,12 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             super(binding.getRoot());
             this.binding = binding;
         }
+
+        /**
+         * fills data fields parameters if booking entry is selected and mark selected entry with color
+         * @param booking
+         * @param actionable
+         */
         public void bind(BookingRoom booking, Actionable actionable) {
             ClientRoom client = BookingsFragment.db.dao().getClientById(booking.client_id);
             ApartmentRoom apartment = BookingsFragment.db.dao().getApartmentById(booking.apartment_id);;
@@ -112,6 +125,10 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         }
     }
 
+    /**
+     * returns selected item in Bookings RecyclerView
+     * @return
+     */
     public BookingRoom getSelected() {
         if (checkedPosition != -1) {
             return bookings.get(checkedPosition);

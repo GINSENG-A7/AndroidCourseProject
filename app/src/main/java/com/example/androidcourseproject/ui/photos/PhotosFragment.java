@@ -1,9 +1,6 @@
 package com.example.androidcourseproject.ui.photos;
 
 import static android.app.Activity.RESULT_OK;
-
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -83,6 +80,11 @@ public class PhotosFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("relatedApartmentKey", this, new FragmentResultListener() {
+                    /**
+                     * Sets apartmets related bookings to recycler view
+                     * @param key
+                     * @param bundle
+                     */
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         int apartmentId = bundle.getInt("apartmentId");
@@ -104,10 +106,14 @@ public class PhotosFragment extends Fragment {
         binding.addPhotoButton.setOnClickListener(v -> {
             Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
             startActivityForResult(intent, RESULT_OK);
-            showLongToastWithText(getContext(), "Запись успешно добавлена");
+            Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyAdded, Toast.LENGTH_LONG).show();
         });
 
         binding.deletePhotoButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Delete photo entry if it is selected
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 PhotoRoom photo = adapter.getSelected();
@@ -115,15 +121,21 @@ public class PhotosFragment extends Fragment {
                     db.dao().deletePhoto(photo);
                     adapter.setPhotos(db.dao().getAllPhotosByApartmentId(apartment.apartment_id));
                     adapter.notifyDataSetChanged();
-                    showLongToastWithText(getContext(), "Запись успешно удалена");
+                    Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyDeleted, Toast.LENGTH_LONG).show();
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    /**
+     * Opens device file manager and wait for choosing picture
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

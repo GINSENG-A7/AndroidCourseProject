@@ -1,7 +1,6 @@
 package com.example.androidcourseproject.ui.apartments;
 
 import static com.example.androidcourseproject.ui.MainActivity.convertCalendarViewDateToLong;
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -40,9 +39,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RegisterClientApartmentPicker} factory method to
- * create an instance of this fragment.
+ * Second stage of client registration fragment
  */
 public class RegisterClientApartmentPicker extends Fragment {
     private ApartmentsViewModel apartmentsViewModel;
@@ -85,6 +82,11 @@ public class RegisterClientApartmentPicker extends Fragment {
 
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("newClientKey", this, new FragmentResultListener() {
+                    /**
+                     * Gets data from previous fragment
+                     * @param key
+                     * @param bundle
+                     */
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         valueOfGuests = bundle.getInt("valueOfGuests");
@@ -109,6 +111,10 @@ public class RegisterClientApartmentPicker extends Fragment {
         });
 
         binding.setSettlingDateButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom layout to pick settling date
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 // clienteate an alert builder
@@ -152,6 +158,10 @@ public class RegisterClientApartmentPicker extends Fragment {
         });
 
         binding.setEvictionDateButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom layout to pick eviction date and apply filters to
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 // clienteate an alert builder
@@ -182,7 +192,7 @@ public class RegisterClientApartmentPicker extends Fragment {
                             adapter.notifyDataSetChanged();
                         }
                         else {
-                            showLongToastWithText(getContext(), "Даты заданы некорректно");
+                            Toast.makeText(getContext(), R.string.toasts_InvalidDataInput, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
@@ -211,6 +221,11 @@ public class RegisterClientApartmentPicker extends Fragment {
         });
 
         binding.bottomPriceEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            /**
+             * inserts lowest price to a global variable when element lose focus
+             * @param v
+             * @param hasFocus
+             */
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus == false) {
@@ -220,18 +235,16 @@ public class RegisterClientApartmentPicker extends Fragment {
                     else {
                         bottomPrice = 0;
                     }
-//                    List<ApartmentRoom> list = db.dao().getFilteredApartments(
-//                            chosenSettlingDate,
-//                            chosenEvictionDate,
-//                            bottomPrice,
-//                            topPrice
-//                    );
-//                    adapter = new ApartmentsAdapter(list);
                 }
             }
         });
 
         binding.topPriceEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            /**
+             * inserts highest price to a global variable when element lose focus
+             * @param v
+             * @param hasFocus
+             */
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(hasFocus == false) {
@@ -241,18 +254,15 @@ public class RegisterClientApartmentPicker extends Fragment {
                     else {
                         topPrice = Integer.MAX_VALUE;
                     }
-//                    List<ApartmentRoom> list = db.dao().getFilteredApartments(
-//                            chosenSettlingDate,
-//                            chosenEvictionDate,
-//                            bottomPrice,
-//                            topPrice
-//                    );
-//                    adapter = new ApartmentsAdapter(list);
                 }
             }
         });
 
         binding.registerNewLivingButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * inserts client with related living or booking
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 long lastInsertedClientId = -1;
@@ -273,7 +283,7 @@ public class RegisterClientApartmentPicker extends Fragment {
                         (int) lastInsertedAdditionalServicesId
                 ));
 
-                showLongToastWithText(getContext(), "Проживание успешно зарегистрированно!");
+                Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyAdded, Toast.LENGTH_LONG).show();
                 MainActivity.navigateToClients();
             }
         });
@@ -296,18 +306,9 @@ public class RegisterClientApartmentPicker extends Fragment {
                         adapter.getSelected().apartment_id
                 ));
 
-                showLongToastWithText(getContext(), "Бронирование успешно зарегистрированно!");
+                Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyAdded, Toast.LENGTH_LONG).show();
                 MainActivity.navigateToClients();
             }
         });
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
-
 }

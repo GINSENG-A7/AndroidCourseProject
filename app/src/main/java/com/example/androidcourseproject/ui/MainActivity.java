@@ -61,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static ClientsViewModel clientsViewModel;
     public static boolean clientsListItemsDecorated = false;
 
+    /**
+     * Builds MainActivity and bottom navigation menu with 3 pages
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +73,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         setContentView(binding.getRoot());
 
         BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
 
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_clients, R.id.navigation_livings_and_bookings, R.id.navigation_apartments)
@@ -104,26 +106,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         navController.navigate(R.id.navigation_livings_and_bookings);
     }
 
+    /**
+     * directly opens RegistrationDataInputting
+     */
     public static void navigateToClientRegistrationDataInputting() {
         navController.navigate(R.id.registerClientDataInputs);
     }
 
+    /**
+     * directly opens RegistrationApartmentPicking
+     */
     public static void navigateToClientRegistrationApartmentPicking() {
         navController.navigate(R.id.registerClientApartmentPicker);
     }
 
-    public static void showLongToastWithText(Context context, String text) {
-        Toast.makeText(context, text, Toast.LENGTH_LONG).show();
-    }
-
+    /**
+     * directly opens ClientsFragment
+     */
     public static void navigateToClients() {
         navController.navigate(R.id.navigation_clients);
     }
 
+    /**
+     * directly opens PhotosFragment
+     */
     public static void navigateToPhotos() {
         navController.navigate(R.id.photosFragment);
     }
 
+    /**
+     * correctly convert CalendarView date value to long
+     */
     public static long convertCalendarViewDateToLong( int year, int month, int dayOfMonth) {
         long milliseconds = 0;
         String yearStr = String.valueOf(year);

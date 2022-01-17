@@ -8,7 +8,7 @@
     <string name="clients_goToBookings_buttonTitle">Move to bookings</string>
     <string name="clients_editClient_buttonTitle">Change chosen client\'s data</string>
     <string name="clients_deleteClient_buttonTitle">Delete chosen client\'s data</string>
-    <string name="clients_registerNewClient_buttonTitle">Register new client</string>
+    <string name="clients_registerNewClient_buttonTitle">Register</string>
 
     <string name="bookings_goToClient_buttonTitle">Move to client</string>
     <string name="bookings_editEntry_buttonTitle">Change chosen booking</string>
@@ -60,4 +60,14 @@
     <string name="apartments_numberTextView">Number</string>
     <string name="apartments_typeTextView">Type</string>
     <string name="apartments_priceTextView">Price</string>
+
+    <string name="toasts_EntryIsNotSelected">Entry is not selected</string>
+    <string name="toasts_ChangesAborted">Changes aborted</string>
+    <string name="toasts_EntrySuccessfullyDeleted">Entry Successfully Deleted</string>
+    <string name="toasts_EntrySuccessfullyUpdated">Entry Successfully Updated</string>
+    <string name="toasts_EntrySuccessfullyAdded">Entry Successfully Added</string>
+    <string name="toasts_InvalidDataInput">Invalid Data Input</string>
+    <string name="toasts_AllDataFieldsAreRequired">All Data Fields Are Required</string>
+    <string name="toasts_ApartmentsWithSuchNumberAlreadyAdded">Apartments With Such Number Already Added</string>
+    <string name="toasts_ClientWithSuchPassportDataAlreadyAdded">Client With Such Passport Data Already Added</string>
 </resources>

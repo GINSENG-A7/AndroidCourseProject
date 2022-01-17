@@ -1,7 +1,5 @@
 package com.example.androidcourseproject.ui.livings_and_bookings.livings;
 
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -34,6 +32,9 @@ import com.example.androidcourseproject.ui.livings_and_bookings.LivingsAndBookin
 
 import java.util.List;
 
+/**
+ * Fragment with livings handling
+ */
 public class LivingsFragment extends Fragment {
 
     private LivingsAndBookingsViewModel livingsAndBookingsViewModel;
@@ -48,6 +49,13 @@ public class LivingsFragment extends Fragment {
     private EditText etIntercityTelephone;
     private EditText etFood;
 
+    /**
+     * Inserts all livings entries to recycler view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -74,6 +82,11 @@ public class LivingsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         requireActivity().getSupportFragmentManager()
                 .setFragmentResultListener("relocatedDataKey", this, new FragmentResultListener() {
+                    /**
+                     * Sets clients related livings to recycler view
+                     * @param key
+                     * @param bundle
+                     */
                     @Override
                     public void onFragmentResult(@NonNull String key, @NonNull Bundle bundle) {
                         String result = bundle.getString("tabNameKey");
@@ -87,6 +100,10 @@ public class LivingsFragment extends Fragment {
                 });
 
         binding.goToClientButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens ClientsFragment and set clients id to it
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 LivingRoom living = adapter.getSelected();
@@ -103,6 +120,10 @@ public class LivingsFragment extends Fragment {
         });
 
         binding.deleteEntryButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Delete livings entry if it is selected
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 LivingRoom living = adapter.getSelected();
@@ -123,13 +144,13 @@ public class LivingsFragment extends Fragment {
                             AdditionalServicesRoom additionalService = db.dao().getAdditionalServiceByLivingId(living.living_id);
                             db.dao().deleteAdditionalService(additionalService);
                             db.dao().deleteLiving(living);
-                            showLongToastWithText(getContext(), "Запись успешно удалена");
+                            Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyDeleted, Toast.LENGTH_LONG).show();
                         }
                     });
                     builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -138,12 +159,16 @@ public class LivingsFragment extends Fragment {
                     dialog.show();
 
                 } else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
         binding.showAdditionalServicesButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens dialog what allows to edit additional services data
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 LivingRoom living = adapter.getSelected();
@@ -179,14 +204,14 @@ public class LivingsFragment extends Fragment {
                                     additionalService.food = Integer.valueOf(etFood.getText().toString());
 
                                     db.dao().updateAdditionalService(additionalService);
-                                    showLongToastWithText(getContext(), "Запись успешно обновлена");
+                                    Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyUpdated, Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    showLongToastWithText(getContext(), "Изменения отменены: некорректно введённые данные");
+                                    Toast.makeText(getContext(), R.string.toasts_InvalidDataInput, Toast.LENGTH_LONG).show();
                                 }
                             }
                             else {
-                                showLongToastWithText(getContext(), "Изменения отменены: все поля обязательны к заполнению");
+                                Toast.makeText(getContext(), R.string.toasts_AllDataFieldsAreRequired, Toast.LENGTH_LONG).show();
                             }
 
                         }
@@ -194,11 +219,10 @@ public class LivingsFragment extends Fragment {
                     builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG);
                         }
                     });
 
-                    // clienteate and show the alert dialog
                     AlertDialog dialog = builder.create();
                     dialog.show();
 

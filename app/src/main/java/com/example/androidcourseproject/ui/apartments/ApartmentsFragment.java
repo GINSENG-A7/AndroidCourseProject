@@ -1,7 +1,5 @@
 package com.example.androidcourseproject.ui.apartments;
 
-import static com.example.androidcourseproject.ui.MainActivity.showLongToastWithText;
-
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -36,6 +34,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Fragment with apartments handling
+ */
 public class ApartmentsFragment extends Fragment {
 
     private ApartmentsViewModel apartmentsViewModel;
@@ -47,6 +48,13 @@ public class ApartmentsFragment extends Fragment {
     private TextView etPrice;
     public String[] apartmentTypesList = new String[] {"Люкс", "Полулюкс", "Одноместный", "Двуместный", "Трёхместный", "Четырёхместный", "Пятиместный"};
 
+    /**
+     * Inserts all apartments entries to recycler view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         apartmentsViewModel =
@@ -80,6 +88,10 @@ public class ApartmentsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         binding.showPhotosButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Sends apartment id to next fragment
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 ApartmentRoom apartment = adapter.getSelected();
@@ -96,6 +108,10 @@ public class ApartmentsFragment extends Fragment {
         });
 
         binding.editApartmentButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom alert to edit apartment data
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 ApartmentRoom apartment = adapter.getSelected();
@@ -132,21 +148,21 @@ public class ApartmentsFragment extends Fragment {
                                     adapter.setApartments(db.dao().getAllApartments());
                                     adapter.notifyDataSetChanged();
 
-                                    showLongToastWithText(getContext(), "Запись успешно обновлена");
+                                    Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyUpdated, Toast.LENGTH_LONG).show();
                                 }
                                 else {
-                                    showLongToastWithText(getContext(), "Апартаменты с таким номером уже добавлены");
+                                    Toast.makeText(getContext(), R.string.toasts_ApartmentsWithSuchNumberAlreadyAdded, Toast.LENGTH_LONG).show();
                                 }
                             }
                             else {
-                                showLongToastWithText(getContext(), "Все поля обязательны к заполнению");
+                                Toast.makeText(getContext(), R.string.toasts_AllDataFieldsAreRequired, Toast.LENGTH_LONG).show();
                             }
                         }
                     });
                     builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -174,6 +190,10 @@ public class ApartmentsFragment extends Fragment {
         });
 
         binding.deleteApartmentButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Cascade delete apartment entry with all related entries from database
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 ApartmentRoom apartment = adapter.getSelected();
@@ -203,7 +223,7 @@ public class ApartmentsFragment extends Fragment {
                     builder.setNegativeButton("NO",  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            showLongToastWithText(getContext(), "Изменения отменены");
+                            Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                         }
                     });
 
@@ -213,12 +233,16 @@ public class ApartmentsFragment extends Fragment {
 
                 }
                 else {
-                    Toast.makeText(getContext(), "Запись не выбрана", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.toasts_EntryIsNotSelected, Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        binding.addNewButton.setOnClickListener(new View.OnClickListener() {
+        binding.addNewApartmentButton.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Opens custom alert what allows to add new apartment to database
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 // clienteate an alert builder
@@ -255,21 +279,21 @@ public class ApartmentsFragment extends Fragment {
                                 adapter.setApartments(db.dao().getAllApartments());
                                 adapter.notifyDataSetChanged();
 
-                                showLongToastWithText(getContext(), "Запись успешно добавлена");
+                                Toast.makeText(getContext(), R.string.toasts_EntrySuccessfullyAdded, Toast.LENGTH_LONG).show();
                             }
                             else {
-                                showLongToastWithText(getContext(), "Апартаменты с таким номером уже добавлены");
+                                Toast.makeText(getContext(), R.string.toasts_ApartmentsWithSuchNumberAlreadyAdded, Toast.LENGTH_LONG).show();
                             }
                         }
                         else {
-                            showLongToastWithText(getContext(), "Все поля обязательны к заполнению");
+                            Toast.makeText(getContext(), R.string.toasts_AllDataFieldsAreRequired, Toast.LENGTH_LONG).show();
                         }
                     }
                 });
                 builder.setNegativeButton("CANCEL",  new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        showLongToastWithText(getContext(), "Изменения отменены");
+                        Toast.makeText(getContext(), R.string.toasts_ChangesAborted, Toast.LENGTH_LONG).show();
                     }
                 });
 
